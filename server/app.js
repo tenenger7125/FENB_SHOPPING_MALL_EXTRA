@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const { mongooseConnect } = require('./database/shop');
 
 require('dotenv').config();
 
@@ -16,6 +17,8 @@ app.use(cors());
 
 app.use('/api', api);
 
-app.listen(PORT, () => {
-  console.log(`app listening on http://localhost:${PORT}`);
+mongooseConnect(() => {
+  app.listen(PORT, () => {
+    console.log(`app listening on http://localhost:${PORT}`);
+  });
 });

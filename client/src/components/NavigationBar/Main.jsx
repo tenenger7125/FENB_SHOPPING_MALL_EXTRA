@@ -21,10 +21,10 @@ import { SlHandbag } from 'react-icons/sl';
 
 import { SearchBar, DarkMode } from 'components/NavigationBar';
 import { signOut } from 'api/fetch';
+import { userState } from 'recoil/atoms';
 import { useMediaQuery } from 'hooks';
 import { getDecodeSearch } from 'utils';
 import { QUERY_KEY, MEDIAQUERY_WIDTH, PATH } from 'constants';
-import { userState } from 'recoil/atoms';
 
 const Main = () => {
   const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);

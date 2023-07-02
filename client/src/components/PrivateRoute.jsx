@@ -2,8 +2,8 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useSetRecoilState } from 'recoil';
 
-import { verifyQuery } from '../api/query';
-import { userState } from '../recoil/atoms';
+import { verifyQuery } from 'api/query';
+import { userState } from 'recoil/atoms';
 
 const PrivateRoute = ({ redirectTo, element }) => {
   const { state } = useLocation();

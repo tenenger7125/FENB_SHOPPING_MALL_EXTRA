@@ -1,16 +1,27 @@
-let slides = [
-  {
-    imgURL: 'http://localhost:8000/images/coupons/10Coupon.png',
-    sideBackgroundColor: '#FCEAD9',
-    alt: '10% 쿠폰 슬라이드',
-  },
-  {
-    imgURL: 'http://localhost:8000/images/coupons/20000Coupon.png',
-    sideBackgroundColor: '#FCEAD9',
-    alt: '20000원 쿠폰 슬라이드',
-  },
-];
+const { Slide } = require('../models/shop');
+const { getCoupon } = require('./coupons');
 
-const getSlides = () => slides;
+const createSlides = async slide => {
+  // OK!
+  try {
+    const createdSlide = await Slide.create(slide);
 
-module.exports = { getSlides };
+    return createdSlide;
+  } catch (err) {
+    console.error('슬라이드를 추가하는데 실패했습니다.', err);
+  }
+};
+
+const getSlides = async () => {
+  // OK!
+  try {
+    const slides = await Slide.find();
+
+    console.log(slides);
+    return slides;
+  } catch (err) {
+    console.error('슬라이드를 가져오는데 실패했습니다.', err);
+  }
+};
+
+module.exports = { createSlides, getSlides };

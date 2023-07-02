@@ -1,18 +1,13 @@
-const { getSelectedSizeStock } = require('../controllers/stocks');
-const { getUserCart } = require('../controllers/carts');
+const { getProductStockBySize } = require('../controllers/stocks');
+const { getUserCarts, deleteQuantityZero } = require('../controllers/carts');
 
-const cartStockCheck = (req, res, next) => {
+const cartStockCheck = async (req, res, next) => {
   const { email } = req.locals;
-  const { products } = getUserCart(email);
+  const carts = await getUserCarts(email);
 
-  const isSoldOut = products.some(
-    ({ id, selectedSize, quantity }) => getSelectedSizeStock(id, selectedSize).stock < quantity
-  );
+  await deleteQuantityZero(email);
 
-  // 기존에 저장된 장바구니의 모든 상품 재고 확인
-  if (isSoldOut)
-    return res.status(406).send({ message: '기존 장바구니에 재고가 없는 상품이 있습니다. 수량을 다시 선택해주세요' });
-
+  req.locals.carts = carts;
   next();
 };
 

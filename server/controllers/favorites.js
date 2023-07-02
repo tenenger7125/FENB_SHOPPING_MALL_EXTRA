@@ -1,45 +1,60 @@
-const defaultFavorite = {
-  email: '',
-  products: [],
+const { User, Product } = require('../models/shop');
+
+const createUserFavorite = async (email, productId) => {
+  // OK!
+  try {
+    const product = await Product.findOne({ _id: productId }).lean();
+    product.productId = product._id;
+    delete product._id;
+
+    const createdUserFavorite = await User.findOneAndUpdate(
+      { email },
+      { $push: { favorites: product } },
+      { new: true }
+    );
+
+    return createdUserFavorite;
+  } catch (err) {
+    console.error('관심상품을 추가하는데 실패했습니다.', err);
+  }
 };
 
-let favorites = [
-  {
-    email: 'test@test.com',
-    products: [],
-  },
-];
+const getUserFavorites = async email => {
+  // OK!
+  try {
+    const user = await User.findOne({ email });
 
-const createUser = email => {
-  favorites = [...favorites, { ...defaultFavorite, email }];
+    return user.favorites;
+  } catch (err) {
+    console.error('관심상품을 가져오는데 실패했습니다.', err);
+  }
 };
 
-const addFavorite = (email, product) => {
-  favorites = favorites.map(favorite =>
-    favorite.email === email ? { ...favorite, products: [product, ...favorite.products] } : favorite
-  );
+const hasUserFavorite = async (email, productId) => {
+  // OK!
+  try {
+    const user = await User.findOne({ email, 'favorites.productId': productId });
+
+    return (user?.favorites.length ?? 0) === 1;
+  } catch (err) {
+    console.error('관심상품을 가져오는데 실패했습니다.', err);
+  }
 };
 
-const getFavorites = email => favorites.find(favorite => favorite.email === email);
+const deleteUserFavorite = async (email, productId) => {
+  // OK!
+  try {
+    const user = await User.findOneAndUpdate({ email }, { $pull: { favorites: { productId } } });
 
-const getFavorite = (email, productId) =>
-  favorites.find(favorite => favorite.email === email).products.find(product => product.id === productId);
-
-const removeFavoriteProduct = (email, productId) => {
-  favorites = favorites.map(favorite =>
-    favorite.email === email
-      ? {
-          ...favorite,
-          products: favorite.products.filter(product => product.id !== productId),
-        }
-      : favorite
-  );
+    return user.favorites;
+  } catch (err) {
+    console.error('관심상품을 가져오는데 실패했습니다.', err);
+  }
 };
 
 module.exports = {
-  createUser,
-  addFavorite,
-  getFavorites,
-  getFavorite,
-  removeFavoriteProduct,
+  createUserFavorite,
+  getUserFavorites,
+  deleteUserFavorite,
+  hasUserFavorite,
 };

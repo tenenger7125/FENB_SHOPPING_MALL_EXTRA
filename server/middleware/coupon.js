@@ -1,10 +1,10 @@
-const { removeExpireCoupon } = require('../controllers/coupons');
+const { deleteExpiredUserCoupon } = require('../controllers/coupons');
 
-const expireCoupon = (req, res, next) => {
+const expireCoupon = async (req, res, next) => {
   const { email } = req.locals;
 
-  removeExpireCoupon(email);
-
+  const user = await deleteExpiredUserCoupon(email);
+  req.locals.coupons = user.coupons;
   next();
 };
 

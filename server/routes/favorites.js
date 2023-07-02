@@ -1,42 +1,37 @@
-const jwt = require('jsonwebtoken');
 const router = require('express').Router();
 
 const { authCheck } = require('../middleware/auth');
-const { toggleProductFavorite, getProduct } = require('../controllers/products');
-const { addFavorite, removeFavoriteProduct, getFavorites, getFavorite } = require('../controllers/favorites');
-const { BRANDS, CATEGORIES, GENDER, COLORS } = require('../constants/products');
+const { toggleProductFavorite, getProduct, updateProductFavorite } = require('../controllers/products');
+const {
+  addFavorite,
+  deleteUserFavorite,
+  getUserFavorites,
+  hasUserFavorite,
+  createUserFavorite,
+} = require('../controllers/favorites');
 
-router.get('/me', (req, res) => {
-  const accessToken = req.headers.authorization || req.cookies.accessToken;
+router.get('/me', authCheck, async (req, res) => {
+  // OK!
+  const { email } = req.locals;
+  const favorites = await getUserFavorites(email);
 
-  try {
-    const { email } = jwt.verify(accessToken, process.env.JWT_SECRET_KEY);
-
-    res.send(
-      getFavorites(email).products.map(({ id, brand, category, gender, color, ...rest }) => ({
-        ...rest,
-        id,
-        brand: BRANDS[brand],
-        category: CATEGORIES[category],
-        gender: GENDER[gender],
-        color: COLORS[color],
-      }))
-    );
-  } catch (e) {
-    return res.send([]);
-  }
+  return res.send(favorites);
 });
 
-router.post('/me', authCheck, (req, res) => {
+router.post('/me', authCheck, async (req, res) => {
+  // OK!
   const { email } = req.locals;
-  const id = +req.body.id;
+  const { id: productId } = req.body;
 
-  const isFavorite = !!getFavorite(email, id);
+  const isFavorite = await hasUserFavorite(email, productId);
+  const delta = isFavorite ? -1 : 1;
 
-  isFavorite ? removeFavoriteProduct(email, id) : addFavorite(email, getProduct(id));
-  toggleProductFavorite(id, isFavorite);
+  if (isFavorite) deleteUserFavorite(email, productId);
+  else createUserFavorite(email, productId);
 
-  res.send({ message: '위시리스트에 추가되었습니다.' });
+  updateProductFavorite(productId, delta);
+
+  res.send({ message: `위시리스트에 ${isFavorite ? '제거' : '추가'}되었습니다.` });
 });
 
 module.exports = router;

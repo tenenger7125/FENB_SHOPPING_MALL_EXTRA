@@ -2,13 +2,10 @@ const jwt = require('jsonwebtoken');
 const router = require('express').Router();
 
 const users = require('../controllers/users');
-const carts = require('../controllers/carts');
-const favorites = require('../controllers/favorites');
-const coupons = require('../controllers/coupons');
-const history = require('../controllers/history');
 const { authCheck } = require('../middleware/auth');
 
 router.get('/signout', (req, res) => {
+  // OK!
   res.cookie('accessToken', '', { maxAge: 0, httpOnly: true });
   res.send({ isSignIn: false });
 });
@@ -17,14 +14,13 @@ router.get('/verify', authCheck, (req, res) => {
   res.send({ isSignIn: true });
 });
 
-router.post('/signin', (req, res) => {
-  // 401 Unauthorized
+router.post('/signin', async (req, res) => {
+  // OK!
   const { email, password } = req.body;
   if (!email || !password)
     return res.status(401).send({ message: '사용자 아이디 또는 패스워드가 전달되지 않았습니다.' });
 
-  // 401 Unauthorized
-  const user = users.confirmUser(email, password);
+  const user = await users.hasUserEmail(email, password);
   if (!user) return res.status(401).send({ message: '등록되지 않은 사용자입니다.' });
 
   const accessToken = jwt.sign({ email }, process.env.JWT_SECRET_KEY, {
@@ -40,15 +36,15 @@ router.post('/signin', (req, res) => {
   res.send({ email, username: user.name });
 });
 
-router.post('/signup', (req, res) => {
-  // 401 Unauthorized
+router.post('/signup', async (req, res) => {
+  // OK!
   const { email, name, phone, password, mainAddress, detailAddress, postcode } = req.body;
-  req.locals = email;
 
   if (!email || !password || !name || !phone)
     return res.status(401).send({ message: '필수 정보가 전달되지 않았습니다.' });
 
-  const isDuplicate = users.checkDuplicateEmail(email);
+  const isDuplicate = await users.hasUserEmail(email);
+
   if (isDuplicate) return res.status(400).send({ message: '이메일이 중복입니다.' });
 
   users.createUser({
@@ -59,20 +55,15 @@ router.post('/signup', (req, res) => {
     mainAddress,
     detailAddress,
     postcode,
-    createAt: new Date(),
   });
-  carts.createUser(email);
-  coupons.createUser(email);
-  favorites.createUser(email);
-  history.createUser(email);
 
   res.send({ message: '회원가입이 완료되었습니다.' });
 });
 
-router.post('/signup/email', (req, res) => {
+router.post('/signup/email', async (req, res) => {
+  // OK!
   const { email } = req.body;
-
-  const isDuplicate = users.checkDuplicateEmail(email);
+  const isDuplicate = await users.hasUserEmail(email);
 
   res.send({ isDuplicate });
 });

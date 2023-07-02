@@ -1,70 +1,122 @@
-const defaultCart = {
-  email: '',
-  products: [],
+const { User, Product } = require('../models/shop');
+const { ObjectId } = require('mongodb');
+
+const createUserCart = async (email, _id, size, quantity) => {
+  // OK!
+  try {
+    const product = await Product.findOne({ _id }).lean();
+    product.size = size;
+    product.quantity = quantity;
+    product.productId = product._id;
+    delete product._id;
+
+    const createdUserCart = await User.findOneAndUpdate(
+      { email },
+      {
+        $push: { carts: product },
+      },
+      { new: true }
+    );
+
+    return createdUserCart;
+  } catch (err) {
+    console.error('장바구니에 상품을 추가하는데 실패했습니다.', err);
+  }
 };
 
-let carts = [
-  {
-    email: 'test@test.com',
-    products: [],
-  },
-];
+const getUserCarts = async email => {
+  // OK!
+  try {
+    const user = await User.findOne({ email });
 
-const createUser = email => {
-  carts = [...carts, { ...defaultCart, email }];
+    return user.carts;
+  } catch (err) {
+    console.error('장바구니에 담긴 상품을 가져오는데 실패했습니다.', err);
+  }
 };
 
-const addCart = ({ email, ...newProduct }) => {
-  carts = carts.map(cart =>
-    cart.email === email ? { ...cart, products: [{ ...newProduct }, ...cart.products] } : cart
-  );
+const getSelectedUserCarts = async (email, productId, select) => {
+  //OK!
+  try {
+    const user = await User.findOne({ email, 'carts.productId': productId, 'carts.size': select });
+
+    return user?.carts ?? [];
+  } catch (err) {
+    console.error('장바구니에 담긴 상품을 가져오는데 실패했습니다.', err);
+  }
 };
 
-const getUserCart = email => carts.find(cart => cart.email === email);
+const getUserCart = async (email, cartId, select) => {
+  //OK!
+  try {
+    const user = await User.findOne({ email, 'carts._id': cartId, 'carts.size': select });
 
-const getUserCartSelectProductStock = (products, id, selectedSize) =>
-  products.reduce(
-    (acc, cur) => {
-      if (cur.id === id && cur.selectedSize === selectedSize) acc.quantity += cur.quantity;
-      return acc;
-    },
-    { selectedSize, quantity: 0 }
-  );
-
-const changeCart = ({ email, id, selectedSize, quantity }) => {
-  carts = carts.map(cart =>
-    cart.email === email
-      ? {
-          ...cart,
-          products: cart.products.map(product =>
-            product.id === id && product.selectedSize === selectedSize ? { ...product, quantity } : product
-          ),
-        }
-      : cart
-  );
+    return user?.carts[0] ?? {};
+  } catch (err) {
+    console.error('장바구니에 담긴 상품을 가져오는데 실패했습니다.', err);
+  }
 };
 
-const removeCart = ({ email, id, selectedSize }) => {
-  carts = carts.map(cart =>
-    cart.email === email
-      ? {
-          ...cart,
-          products: cart.products.filter(product => product.id !== id || product.selectedSize !== selectedSize),
-        }
-      : cart
-  );
+const updateUserCart = async (email, cartId, size, quantity) => {
+  // ❗ 0이 되거나 마이너스가 될때 처리가 필요하다.
+  // OK!
+  try {
+    const user = await User.findOneAndUpdate(
+      { email, 'carts._id': cartId, 'carts.size': size },
+      {
+        $set: { 'carts.$[product1].quantity': quantity },
+      },
+      {
+        new: true,
+        arrayFilters: [{ 'product1._id': cartId }],
+      }
+    );
+
+    return user.carts;
+  } catch (err) {
+    console.error('장바구니를 수정하는데 실패했습니다.', err);
+  }
 };
 
-const removeAllCart = email => {
-  carts = carts.map(cart => (cart.email === email ? { ...cart, products: [] } : cart));
+const deleteQuantityZero = async email => {
+  try {
+    const user = await User.findOneAndUpdate({ email }, { $pull: { carts: { quantity: 0 } } }, { new: true });
+
+    return user.carts;
+  } catch (err) {
+    console.error('수량이 0인 상품을 제거하는데 실패했습니다.', err);
+  }
+};
+
+const deleteUserCart = async (email, cartId) => {
+  // OK!
+  try {
+    const user = await User.findOneAndUpdate({ email }, { $pull: { carts: { _id: cartId } } }, { new: true });
+
+    return user.carts;
+  } catch (err) {
+    console.error('장바구니 상품을 삭제하는데 실패했습니다.', err);
+  }
+};
+
+const removeUserCart = async email => {
+  // OK!
+  try {
+    const user = await User.findOneAndUpdate({ email }, { $set: { carts: [] } });
+
+    return user.carts;
+  } catch (err) {
+    console.error('장바구니를 비우는데 실패했습니다.', err);
+  }
 };
 
 module.exports = {
-  createUser,
-  addCart,
+  createUserCart,
+  getUserCarts,
+  getSelectedUserCarts,
   getUserCart,
-  getUserCartSelectProductStock,
-  changeCart,
-  removeCart,
-  removeAllCart,
+  updateUserCart,
+  deleteUserCart,
+  deleteQuantityZero,
+  removeUserCart,
 };

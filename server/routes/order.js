@@ -1,39 +1,44 @@
 const router = require('express').Router();
 
-const { COLORS } = require('../constants/products');
-const { getUserCart, removeAllCart } = require('../controllers/carts');
-const { removeStock } = require('../controllers/stocks');
-const { getPurchasesHistory, addPurchaseHistory } = require('../controllers/history');
-const { getAddress } = require('../controllers/users');
-const { getCoupon, removeCoupon } = require('../controllers/coupons');
+const { removeUserCart } = require('../controllers/carts');
+const { updateStock } = require('../controllers/stocks');
+const { getUserHistories, createUserHistory } = require('../controllers/histories');
+const { getUserAddressOne } = require('../controllers/users');
+const { getUserCoupon, deleteUserCoupon } = require('../controllers/coupons');
 const { cartStockCheck } = require('../middleware/stock');
 const { authCheck } = require('../middleware/auth');
 const { expireCoupon } = require('../middleware/coupon');
 
 // 결제 페이지 이동 전 check 용도
 router.get('/', authCheck, cartStockCheck, expireCoupon, (req, res) => {
-  const { email } = req.locals;
-  const isEmpty = getUserCart(email).products.length < 0;
+  // OK!
+  const { carts } = req.locals;
 
-  if (isEmpty) return res.send({ message: '장바구니가 비어있습니다. 상품을 장바구니에 추가해주세요' });
+  if (carts.length <= 0)
+    return res.status(406).send({ message: '장바구니가 비어있습니다. 상품을 장바구니에 추가해주세요' });
 
   res.send({ message: '결제 페이지로 이동합니다.' });
 });
 
 // 쿠폰 적용시 확인 용도
-router.get('/coupons/:id', authCheck, (req, res) => {
-  const { email } = req.locals;
-  const { id } = req.params;
-  const { products } = getUserCart(email);
+router.get('/coupons/:id', authCheck, cartStockCheck, expireCoupon, async (req, res) => {
+  //OK!
+  const { email, carts } = req.locals;
+  const { id: userCouponId } = req.params;
 
-  const { discountRate = 0, discountPrice = 0, minimumPrice = 0 } = getCoupon(email, id) ?? {};
+  const coupon = await getUserCoupon(email, userCouponId);
 
-  const totalPrice = products.reduce((accumulate, product) => accumulate + product.price * product.quantity, 0);
-  const discountedTotalPrice = discountPrice ? totalPrice - discountPrice : totalPrice * (1 - discountRate / 100);
-  const discountAmount = totalPrice - discountedTotalPrice;
+  if (!coupon) return res.status(404).send({ message: '존재하지 않는 쿠폰입니다' });
 
-  if (totalPrice < minimumPrice)
+  const totalPrice = carts.reduce((acc, cart) => acc + cart.price * cart.quantity, 0);
+
+  if (totalPrice < coupon.minimumPrice)
     return res.status(403).send({ message: `쿠폰을 사용하기 위한 최소 주문 금액을 충족하지 않습니다.` });
+
+  const discountedTotalPrice = coupon.discountPrice
+    ? totalPrice - coupon.discountPrice
+    : totalPrice * (1 - coupon.discountRate / 100);
+  const discountAmount = totalPrice - discountedTotalPrice;
 
   res.send({
     discountAmount,
@@ -42,51 +47,52 @@ router.get('/coupons/:id', authCheck, (req, res) => {
 });
 
 // 결제하기 버튼 클릭시 사용해주세요
-router.post('/pay', authCheck, cartStockCheck, expireCoupon, (req, res) => {
-  const { email } = req.locals;
-  const { addressId, paymentMethod, couponId = null } = req.body;
+router.post('/pay', authCheck, cartStockCheck, expireCoupon, async (req, res) => {
+  //OK!
+  const { email, carts } = req.locals;
+  const { addressId, paymentMethod, userCouponId = null } = req.body;
+  const totalPrice = carts.reduce((acc, cart) => acc + cart.price * cart.quantity, 0);
 
-  const { products } = getUserCart(email);
-  // address id로 주소 가져오기
-  const deliveryAddress = getAddress(email, addressId);
+  let [discountAmount, discountedTotalPrice] = [0, 0];
+  const coupon = getUserCoupon(userCouponId);
 
-  const { discountRate = 0, discountPrice = 0, minimumPrice = 0 } = getCoupon(email, couponId) ?? {};
+  if (couponId) {
+    const coupon = couponId && (await getUserCoupon(email, couponId));
 
-  const totalPrice = products.reduce((accumulate, product) => accumulate + product.price * product.quantity, 0);
-  const discountedTotalPrice = discountPrice ? totalPrice - discountPrice : totalPrice * (1 - discountRate / 100);
-  const discountAmount = totalPrice - discountedTotalPrice;
+    if (totalPrice < coupon.minimumPrice)
+      return res.status(403).send({ message: `쿠폰을 사용하기 위한 최소 주문 금액을 충족하지 않습니다.` });
 
-  if (totalPrice < minimumPrice)
-    return res.status(403).send({ message: `쿠폰을 사용하기 위한 최소 주문 금액을 충족하지 않습니다.` });
+    discountedTotalPrice = coupon.discountPrice
+      ? totalPrice - coupon.discountPrice
+      : totalPrice * (1 - coupon.discountRate / 100);
+    discountAmount = totalPrice - discountedTotalPrice;
+  }
+  const address = await getUserAddressOne(email, addressId);
 
-  addPurchaseHistory(email, {
-    deliveryAddress,
-    products,
-    paymentMethod,
+  createUserHistory(email, {
+    address,
+    purchased: carts,
     totalPrice,
-    discountedTotalPrice,
     discountAmount,
+    discountedTotalPrice,
+    paymentMethod,
   });
-  removeCoupon(email, couponId);
+  deleteUserCoupon(email, couponId);
 
   // 상품 사이즈 별 수량 변경하기
-  const userCart = getUserCart(email);
-  userCart.products.forEach(product => removeStock(product));
+  carts.forEach(({ productId, size, quantity }) => updateStock(productId, size, -quantity));
 
   // 유저 장바구니 비우기
-  removeAllCart(email);
+  removeUserCart(email);
   res.send({ message: '결제가 완료되었습니다.' });
 });
 
 // 결제 목록 확인
-router.get('/history', authCheck, (req, res) => {
+router.get('/history', authCheck, async (req, res) => {
   const { email } = req.locals;
-  const history = getPurchasesHistory(email);
+  const histories = await getUserHistories(email);
 
-  res.send({
-    ...history[0],
-    products: history[0].products.map(product => ({ ...product, color: COLORS[product.color] })),
-  });
+  res.send(histories);
 });
 
 module.exports = router;

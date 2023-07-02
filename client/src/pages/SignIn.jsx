@@ -8,9 +8,9 @@ import { notifications } from '@mantine/notifications';
 
 import { FormInput } from 'components/Sign';
 import { signIn } from 'api/fetch';
+import { userState } from 'recoil/atoms';
 import { signinSchema } from 'schema';
 import { PATH } from 'constants';
-import { userState } from 'recoil/atoms';
 
 const SignIn = () => {
   const { colors, colorScheme } = useMantineTheme();
