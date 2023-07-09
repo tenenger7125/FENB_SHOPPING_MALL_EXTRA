@@ -17,8 +17,8 @@ const OrderProducts = ({ products }) => {
         py="1.6rem"
         spacing="2rem"
         sx={{ border: '1px solid lightgray', borderRadius: '5px' }}>
-        {products.map(({ selectedSize, quantity, name, price, color, imgURL, id }) => (
-          <Group key={`${id}-${selectedSize}`} fz="1.4rem" justify="center" sx={{ flexWrap: 'nowrap' }}>
+        {products.map(({ _id: id, size, quantity, name, price, color, imgURL }) => (
+          <Group key={id} fz="1.4rem" justify="center" sx={{ flexWrap: 'nowrap' }}>
             <div style={{ width: '20%', minWidth: `${matches ? '10.8rem' : '7.8rem'}` }}>
               <Image
                 alt={name}
@@ -33,7 +33,7 @@ const OrderProducts = ({ products }) => {
                 <Title c={colorScheme === 'dark' ? 'gray.4' : '#111'} fw="bold" fz="1.6rem">
                   {name}
                 </Title>
-                <Text pl="0.2rem">사이즈 : {selectedSize}</Text>
+                <Text pl="0.2rem">사이즈 : {size}</Text>
                 <Text pl="0.2rem">색상 : {color.kr}</Text>
                 <Text pl="0.2rem">
                   수량 / 가격 : {quantity} / {price.toLocaleString('ko-KR')} 원

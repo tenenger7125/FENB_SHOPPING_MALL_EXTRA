@@ -7,7 +7,7 @@ const createUserHistory = async (email, history) => {
       { $push: { histories: { $each: [history], $position: 0 } } },
       { new: true }
     );
-
+    console.log(createdUserHistory);
     return createdUserHistory;
   } catch (err) {
     console.error('구매내역을 기록하는데 실패했습니다.', err);

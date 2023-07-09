@@ -20,9 +20,9 @@ const History = ({ discount: { discountAmount, discountedTotalPrice } }) => {
         <Title fw="bold" fz="2rem" mb="0.8rem">
           주문 상품
         </Title>
-        {carts.map(({ id, selectedSize, imgURL, name, color, quantity, price }) => (
+        {carts.map(({ id, size, imgURL, name, color, quantity, price }) => (
           <Group
-            key={`${id}-${selectedSize}`}
+            key={`${id}-${size}`}
             align="flex-start"
             c={colorScheme === 'dark' ? 'gray.6' : 'dark'}
             fz="1.4rem"
@@ -32,7 +32,7 @@ const History = ({ discount: { discountAmount, discountedTotalPrice } }) => {
               <Text c={colorScheme === 'dark' ? 'gray.4' : 'dark'} fw="bold" fz="1.4rem" mb="0.4rem">
                 {name}
               </Text>
-              <Text>사이즈 : {selectedSize}</Text>
+              <Text>사이즈 : {size}</Text>
               <Text>색상 : {color.kr}</Text>
               <Text>수량 : {quantity}</Text>
               <Text>가격 : {price.toLocaleString('ko-KR')} 원</Text>

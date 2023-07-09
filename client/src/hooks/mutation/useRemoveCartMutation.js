@@ -6,8 +6,8 @@ const useRemoveCartMutation = () =>
   useGenericMutation({
     queryKey: QUERY_KEY.CARTS,
     mutationFn: removeCart,
-    onMutate({ id, selectedSize }) {
-      return carts => carts.filter(cart => cart.id !== id || cart.selectedSize !== selectedSize);
+    onMutate(id) {
+      return carts => carts.filter(cart => cart._id !== id);
     },
   });
 

@@ -2,14 +2,16 @@ import { useQuery } from '@tanstack/react-query';
 
 import { cartsQuery } from '../../api/query';
 
-const useQuantityOfStocks = (id, selectedSize) => {
+const useQuantityOfStocks = (id, size) => {
   const { data: stocks } = useQuery(
     cartsQuery({
-      select: carts => carts.find(cart => cart.id === id).stocks,
+      select(carts) {
+        return carts.find(cart => cart._id === id)?.stocks;
+      },
     })
   );
 
-  return stocks.find(({ size }) => size === selectedSize).stock;
+  return stocks?.find(stock => stock.size === size).quantity;
 };
 
 export default useQuantityOfStocks;

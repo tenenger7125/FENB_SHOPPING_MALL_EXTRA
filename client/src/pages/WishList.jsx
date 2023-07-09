@@ -18,7 +18,7 @@ import { BiTrash } from 'react-icons/bi';
 import { NoProduct } from 'components/common';
 import { favoritesQuery } from 'api/query';
 import { useMediaQuery } from 'hooks';
-import { useToggleWishItemMutation } from 'hooks/mutation';
+import { useRemoveWishItemMutation } from 'hooks/mutation';
 import { MEDIAQUERY_WIDTH, PATH } from 'constants';
 
 const WishList = () => {
@@ -29,10 +29,10 @@ const WishList = () => {
 
   const { data: favorites } = useQuery(favoritesQuery());
 
-  const { mutate: removeWishItem } = useToggleWishItemMutation();
+  const { mutate: removeFavorite } = useRemoveWishItemMutation();
 
   const handleRemoveWishItemClick = id => () => {
-    removeWishItem({ id, isFavorite: true });
+    removeFavorite(id);
   };
 
   const handleProductClick = id => () => {
@@ -44,7 +44,7 @@ const WishList = () => {
       <Title>관심상품 목록</Title>
       {favorites.length ? (
         <Grid p="3.5rem">
-          {favorites.map(({ id, imgURL, name, brand, price, feature }) => (
+          {favorites.map(({ _id: id, productId, imgURL, name, brand, price, feature }) => (
             <Grid.Col
               key={id}
               span={4}
@@ -56,11 +56,11 @@ const WishList = () => {
               }}>
               <Card fz="1.6rem" maw={matches ? '35rem' : '20rem'} padding="lg" withBorder>
                 <Card.Section>
-                  <Image alt={name} src={imgURL} sx={{ cursor: 'pointer' }} truncate onClick={handleProductClick(id)} />
+                  <Image alt={name} src={imgURL} sx={{ cursor: 'pointer' }} onClick={handleProductClick(productId)} />
                 </Card.Section>
 
                 <Group mb="xs" mt="md" position="apart" noWrap>
-                  <Text sx={{ cursor: 'pointer' }} weight={500} truncate onClick={handleProductClick(id)}>
+                  <Text sx={{ cursor: 'pointer' }} weight={500} truncate onClick={handleProductClick(productId)}>
                     {name}
                   </Text>
                   <Badge color="skyblue" h="2rem" sx={{ flexShrink: 0 }} variant="light">

@@ -12,6 +12,7 @@ const Products = () => {
   const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
 
   const currentProduct = useCurrentProduct();
+
   const { imgURL, description, brand, name } = currentProduct;
 
   const [currentSelectedSize, setCurrentSelectedSize] = useState(-1);

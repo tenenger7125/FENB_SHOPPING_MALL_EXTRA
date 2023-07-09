@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-import { checkCoupon } from 'api/fetch';
+import { applyCoupon } from 'api/fetch';
 
 const useOrder = totalPrice => {
   const [discount, setDiscount] = useState({ discountAmount: 0, discountedTotalPrice: totalPrice });
 
-  const updateDiscount = async newCouponId => {
-    const data = await checkCoupon(newCouponId);
+  const updateDiscount = async couponId => {
+    const data = await applyCoupon(couponId);
 
     setDiscount({ ...discount, ...data });
   };

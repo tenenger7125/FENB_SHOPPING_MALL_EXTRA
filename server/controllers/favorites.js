@@ -26,35 +26,35 @@ const getUserFavorites = async email => {
 
     return user.favorites;
   } catch (err) {
-    console.error('관심상품을 가져오는데 실패했습니다.', err);
+    console.error('관심상품들을 가져오는데 실패했습니다.', err);
   }
 };
 
-const hasUserFavorite = async (email, productId) => {
+const getUserFavorite = async (email, favoriteId) => {
   // OK!
   try {
-    const user = await User.findOne({ email, 'favorites.productId': productId });
+    const user = await User.findOne({ email, 'favorites._id': favoriteId });
 
-    return (user?.favorites.length ?? 0) === 1;
+    return user?.favorites[0] ?? {};
   } catch (err) {
     console.error('관심상품을 가져오는데 실패했습니다.', err);
   }
 };
 
-const deleteUserFavorite = async (email, productId) => {
+const deleteUserFavorite = async (email, favoriteId) => {
   // OK!
   try {
-    const user = await User.findOneAndUpdate({ email }, { $pull: { favorites: { productId } } });
+    const user = await User.findOneAndUpdate({ email }, { $pull: { favorites: { _id: favoriteId } } });
 
     return user.favorites;
   } catch (err) {
-    console.error('관심상품을 가져오는데 실패했습니다.', err);
+    console.error('관심상품을 삭제하는데 실패했습니다.', err);
   }
 };
 
 module.exports = {
   createUserFavorite,
   getUserFavorites,
+  getUserFavorite,
   deleteUserFavorite,
-  hasUserFavorite,
 };

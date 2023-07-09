@@ -24,7 +24,7 @@ const Coupon = ({ handleCouponIdUpdate }) => {
           <Accordion.Panel>
             <Radio.Group name="coupons" onChange={handleCouponIdUpdate}>
               <Stack mt="xs">
-                {coupons.map(({ id, title, endTime, minimumPrice }) => (
+                {coupons.map(({ _id: id, title, endTime, minimumPrice }) => (
                   <Radio
                     key={id}
                     disabled={totalPrice < minimumPrice}

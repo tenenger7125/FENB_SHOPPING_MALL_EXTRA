@@ -18,7 +18,7 @@ const createUserCart = async (email, _id, size, quantity) => {
       { new: true }
     );
 
-    return createdUserCart;
+    return createdUserCart.carts.at(-1);
   } catch (err) {
     console.error('장바구니에 상품을 추가하는데 실패했습니다.', err);
   }
@@ -31,25 +31,48 @@ const getUserCarts = async email => {
 
     return user.carts;
   } catch (err) {
-    console.error('장바구니에 담긴 상품을 가져오는데 실패했습니다.', err);
+    console.error('장바구니에 담긴 상품들을 가져오는데 실패했습니다.', err);
   }
 };
 
-const getSelectedUserCarts = async (email, productId, select) => {
+const countSelectedUserCarts = async (email, productId, size) => {
   //OK!
   try {
-    const user = await User.findOne({ email, 'carts.productId': productId, 'carts.size': select });
-
-    return user?.carts ?? [];
+    const user = await User.aggregate([
+      {
+        $match: { email },
+      },
+      {
+        $project: {
+          carts: {
+            $filter: {
+              input: '$carts',
+              as: 'cart',
+              cond: { $and: [{ $eq: ['$$cart.size', size] }, { $eq: ['$$cart.productId', new ObjectId(productId)] }] },
+            },
+          },
+        },
+      },
+      {
+        $unwind: '$carts',
+      },
+      {
+        $group: {
+          _id: null,
+          totalQuantity: { $sum: '$carts.quantity' },
+        },
+      },
+    ]);
+    return user[0]?.totalQuantity ?? 0;
   } catch (err) {
-    console.error('장바구니에 담긴 상품을 가져오는데 실패했습니다.', err);
+    console.error('장바구니에 담긴 특정 상품을 가져오는데 실패했습니다.', err);
   }
 };
 
-const getUserCart = async (email, cartId, select) => {
+const getUserCart = async (email, cartId, size) => {
   //OK!
   try {
-    const user = await User.findOne({ email, 'carts._id': cartId, 'carts.size': select });
+    const user = await User.findOne({ email, 'carts._id': cartId, 'carts.size': size });
 
     return user?.carts[0] ?? {};
   } catch (err) {
@@ -113,10 +136,10 @@ const removeUserCart = async email => {
 module.exports = {
   createUserCart,
   getUserCarts,
-  getSelectedUserCarts,
   getUserCart,
   updateUserCart,
   deleteUserCart,
   deleteQuantityZero,
   removeUserCart,
+  countSelectedUserCarts,
 };

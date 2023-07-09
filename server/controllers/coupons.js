@@ -73,7 +73,7 @@ const getUserCoupon = async (email, userCouponId) => {
 const deleteUserCoupon = async (email, _id) => {
   // OK!
   try {
-    const userCoupon = await User.findOneAndUpdate({ email }, { $pull: { coupons: { couponId: _id } } });
+    const userCoupon = await User.findOneAndUpdate({ email }, { $pull: { coupons: { _id } } }, { new: true });
 
     return userCoupon;
   } catch (err) {

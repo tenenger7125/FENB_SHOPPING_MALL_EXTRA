@@ -54,7 +54,7 @@ GET http://localhost:8000/api/products/pages/2
 POST http://localhost:8000/api/favorites/me
 content-type: application/json
 
-{ "id" : 1 }
+{ "id" : "64a16581630809cf0b5f7430" }
 
 ### 회원가입시 이메일 중복 확인
 POST http://localhost:8000/api/auth/signup/email

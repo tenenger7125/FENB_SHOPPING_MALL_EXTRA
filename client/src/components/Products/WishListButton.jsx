@@ -4,12 +4,12 @@ import { useMantineColorScheme, Stack, Group, Button, Modal, Image, Text, useMan
 import { useDisclosure } from '@mantine/hooks';
 import { FaHeart } from 'react-icons/fa';
 
-import { useToggleWishItemMutation } from 'hooks/mutation';
-import { useIsFavorite } from 'hooks/products';
+import { useAddWishItemMutation, useRemoveWishItemMutation } from 'hooks/mutation';
+import { useFavoriteProduct, useIsFavorite } from 'hooks/products';
 import { PATH } from 'constants';
 
 const WishListButton = ({ currentProduct, isSignInRef }) => {
-  const { id, imgURL, price, brand, name } = currentProduct;
+  const { _id: id, imgURL, price, brand, name } = currentProduct;
 
   const theme = useMantineTheme();
   const { colorScheme } = useMantineColorScheme();
@@ -19,21 +19,26 @@ const WishListButton = ({ currentProduct, isSignInRef }) => {
 
   const [opened, { open, close }] = useDisclosure(false);
 
-  const { mutate: toggleFavorite } = useToggleWishItemMutation();
+  const { mutate: addFavorite } = useAddWishItemMutation();
+  const { mutate: removeFavorite } = useRemoveWishItemMutation();
 
+  const favoriteProduct = useFavoriteProduct();
   const { isFavorite, setIsFavorite } = useIsFavorite(id);
 
   const handleWishListModalOpenClick = () => {
     if (!isSignInRef.current) {
       navigate(PATH.SIGNIN, { state: pathname });
-    } else {
-      if (!isFavorite) {
-        open();
-      }
-
-      setIsFavorite(!isFavorite);
-      toggleFavorite({ id, isFavorite, currentProduct });
+      return;
     }
+
+    if (isFavorite) {
+      removeFavorite(favoriteProduct._id);
+    } else {
+      addFavorite(id);
+      open();
+    }
+
+    setIsFavorite(!isFavorite);
   };
 
   const handleModalButtonClick = () => {

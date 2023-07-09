@@ -9,18 +9,20 @@ import { useQuantityOfStocks } from 'hooks/carts';
 import { useChangeCartQuantityMutation, useRemoveCartMutation } from 'hooks/mutation';
 import { PATH } from 'constants';
 
-const CartItem = ({ cart: { id, category, color, name, price, imgURL, selectedSize, quantity } }) => {
+const CartItem = ({ cart: { _id: id, productId, category, color, name, price, imgURL, size, quantity } }) => {
   const { colors, colorScheme } = useMantineTheme();
 
   const { mutate: changeCartQuantityMuatate } = useChangeCartQuantityMutation();
   const { mutate: removeCartMutate } = useRemoveCartMutation();
-  const maxQuantity = useQuantityOfStocks(id, selectedSize);
+  const maxQuantity = useQuantityOfStocks(id, size);
   const handlers = useRef(null);
 
-  const handleUpdateCartQuantityChange = quantity => changeCartQuantityMuatate({ id, selectedSize, quantity });
-  const handleRemoveCartClick = () => removeCartMutate({ id, selectedSize });
+  const handleUpdateCartQuantityChange = quantity => changeCartQuantityMuatate({ id, size, quantity });
+  const handleRemoveCartClick = () => removeCartMutate(id);
   const handleIncreaseCartQuantityClick = () => handlers.current.increment();
   const handleDecreaseCartQuantityClick = () => handlers.current.decrement();
+
+  // ❗ 수량 변경했을 때, 재고보다 더 담을 경우, 더 담을 수 없다고 UI 적으로 표현하기 toast?
 
   return (
     <Stack
@@ -28,7 +30,7 @@ const CartItem = ({ cart: { id, category, color, name, price, imgURL, selectedSi
       py="2.4rem"
       sx={{ borderBottom: `1px solid ${colorScheme === 'dark' ? colors.gray[8] : colors.gray[3]}` }}>
       <Group spacing="1.6rem" sx={{ flexWrap: 'nowrap' }}>
-        <Link state={id} to={`${PATH.PRODUCTS}/${id}`}>
+        <Link to={`${PATH.PRODUCTS}/${productId}`}>
           <Image alt={name} height="18rem" src={imgURL} width="18rem" withPlaceholder />
         </Link>
 
@@ -41,13 +43,11 @@ const CartItem = ({ cart: { id, category, color, name, price, imgURL, selectedSi
                 fz="1.6rem"
                 mb="0.8rem"
                 sx={{ cursor: 'pointer' }}>
-                <Link state={id} to={`${PATH.PRODUCTS}/${id}`}>
-                  {name}
-                </Link>
+                <Link to={`${PATH.PRODUCTS}/${productId}`}>{name}</Link>
               </Title>
               <Text>{category.kr}</Text>
               <Text>{color.kr}</Text>
-              <Text>사이즈 {selectedSize}</Text>
+              <Text>사이즈 {size}</Text>
               <Group spacing={0}>
                 <Text>수량</Text>
                 <ActionIcon

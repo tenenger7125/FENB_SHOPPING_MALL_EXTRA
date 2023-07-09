@@ -1,16 +1,13 @@
 import { addCart } from 'api/fetch';
-import { useGenericMutation } from 'hooks/mutation';
+import { usePessimisticMutation } from 'hooks/mutation';
 import { QUERY_KEY } from 'constants';
 
 const useAddCartMutation = () =>
-  useGenericMutation({
+  usePessimisticMutation({
     queryKey: QUERY_KEY.CARTS,
     mutationFn: addCart,
-    onMutate({ selectedSize, currentProduct }) {
-      return carts =>
-        carts
-          ? [...carts, { ...currentProduct, selectedSize, quantity: 1 }]
-          : [{ ...currentProduct, selectedSize, quantity: 1 }];
+    onSuccess(cart) {
+      return carts => [...(carts ?? []), cart];
     },
   });
 

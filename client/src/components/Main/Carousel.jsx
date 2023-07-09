@@ -69,8 +69,8 @@ const Carousel = ({ modalOpen, setModalTitle }) => {
         onMouseEnter={autoplay.current.stop}
         onMouseLeave={autoplay.current.reset}
         onSlideChange={setCarouselIdx}>
-        {slides.map(({ couponId, imgURL, alt }) => (
-          <MantineCarousel.Slide key={couponId} sx={{ cursor: 'pointer' }} onClick={handleCarouselClick(couponId)}>
+        {slides.map(({ _id: id, couponId, imgURL, alt }) => (
+          <MantineCarousel.Slide key={id} sx={{ cursor: 'pointer' }} onClick={handleCarouselClick(couponId)}>
             <Image alt={alt} fit="contain" height="45rem" src={imgURL} />
           </MantineCarousel.Slide>
         ))}

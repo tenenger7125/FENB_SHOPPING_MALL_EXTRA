@@ -25,7 +25,9 @@ const filteredProducts = (products, newFilters) => {
           [
             ...sizeFilters.map((filter, i) =>
               filter
-                ? filteredPrice.filter(({ stocks }) => stocks.some(({ size, stock }) => size === SIZES[i] && stock > 0))
+                ? filteredPrice.filter(({ stocks }) =>
+                    stocks.some(({ size, quantity }) => size === SIZES[i] && quantity > 0)
+                  )
                 : []
             ),
           ].flat()

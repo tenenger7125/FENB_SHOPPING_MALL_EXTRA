@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "nodemon server/server"
+    "start": "nodemon server/server",
+    "deploy": "npm run build && aws s3 sync ./dist s3://tenenger7125-486-shoe-shop-client --profile=486-shoe-shop-client"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",

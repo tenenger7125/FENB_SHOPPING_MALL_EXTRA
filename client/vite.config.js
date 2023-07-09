@@ -10,9 +10,13 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: `http://localhost:${PORT}`,
+        target: `http://ec2-3-36-56-62.ap-northeast-2.compute.amazonaws.com:${PORT}/`,
         changeOrigin: true,
+        secure: false,
       },
     },
+  },
+  build: {
+    chunkSizeWarningLimit: 1600,
   },
 });

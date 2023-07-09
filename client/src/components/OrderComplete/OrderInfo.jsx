@@ -4,10 +4,8 @@ import { PAYMENT_METHODS, MEDIAQUERY_WIDTH } from '../../constants';
 import { useMediaQuery } from '../../hooks';
 
 const OrderInfo = ({ history }) => {
-  const { orderDate, paymentMethod, discountedTotalPrice, deliveryAddress } = history;
+  const { createdAt, paymentMethod, discountedTotalPrice, address } = history;
 
-  const address = `(${deliveryAddress.postcode})${deliveryAddress.mainAddress} ${deliveryAddress.detailAddress}`;
-  const orderedDate = new Date(orderDate);
   const payment = PAYMENT_METHODS.find(methods => methods.value === paymentMethod).label;
 
   const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
@@ -23,7 +21,7 @@ const OrderInfo = ({ history }) => {
             수령인
           </Text>
           <Text miw="18rem" w="70%">
-            {deliveryAddress.recipient}
+            {address.recipient}
           </Text>
         </Group>
         <Group spacing={matches ? '3.2rem' : '1.6rem'} sx={{ flexWrap: 'nowrap' }}>
@@ -31,7 +29,7 @@ const OrderInfo = ({ history }) => {
             주소
           </Text>
           <Text miw="18rem" w="70%">
-            {address}
+            {`(${address.postcode})${address.mainAddress} ${address.detailAddress}`}
           </Text>
         </Group>
         <Group spacing={matches ? '3.2rem' : '1.6rem'} sx={{ flexWrap: 'nowrap' }}>
@@ -39,7 +37,7 @@ const OrderInfo = ({ history }) => {
             전화번호
           </Text>
           <Text miw="18rem" w="70%">
-            {deliveryAddress.recipientPhone}
+            {address.recipientPhone}
           </Text>
         </Group>
       </Stack>
@@ -65,7 +63,7 @@ const OrderInfo = ({ history }) => {
             결제 시각
           </Text>
           <Text miw="18rem" w="70%">
-            {orderedDate.toLocaleString('ko-KR')}
+            {new Date(createdAt).toLocaleString('ko-KR')}
           </Text>
         </Group>
       </Stack>

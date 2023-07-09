@@ -2,19 +2,16 @@ import { Link } from 'react-router-dom';
 
 import { Badge, Card, Container, Grid, Group, Image, Text } from '@mantine/core';
 
-import { useMediaQuery } from 'hooks';
 import { usePageProducts } from 'hooks/products';
-import { MEDIAQUERY_WIDTH, PATH } from 'constants';
+import { PATH } from 'constants';
 
 const Products = () => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
-
   const { products } = usePageProducts();
 
   return (
     <Container p="0" pos="relative" size="120rem">
       <Grid m="5rem 0">
-        {products.map(({ id, name, price, imgURL, brand, feature }) => (
+        {products.map(({ _id: id, name, price, imgURL, brand, feature }) => (
           <Grid.Col
             key={id}
             span={3}

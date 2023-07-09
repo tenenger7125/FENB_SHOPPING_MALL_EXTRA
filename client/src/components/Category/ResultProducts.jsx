@@ -8,7 +8,7 @@ import { PATH } from 'constants';
 const ResultProducts = ({ products }) =>
   products.length ? (
     <SimpleGrid breakpoints={[{ maxWidth: 1024, cols: 2 }]} cols={3}>
-      {products.map(({ id, imgURL, name, price, brand, feature }) => (
+      {products.map(({ _id: id, imgURL, name, price, brand, feature }) => (
         <Link key={id} to={`${PATH.PRODUCTS}/${id}`}>
           <Card fz="1.6rem" padding="lg" withBorder>
             <Card.Section pos="relative">

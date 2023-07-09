@@ -6,8 +6,8 @@ const useRemoveAddressMutation = () =>
   useGenericMutation({
     queryKey: QUERY_KEY.ADDRESSES,
     mutationFn: removeAddress,
-    onMutate(id) {
-      return addresses => addresses.filter(address => address.id !== id);
+    onMutate(addressId) {
+      return addresses => addresses.filter(address => address._id !== addressId);
     },
   });
 

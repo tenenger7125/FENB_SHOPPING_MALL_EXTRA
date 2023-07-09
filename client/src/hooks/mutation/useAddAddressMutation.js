@@ -6,10 +6,9 @@ const useAddAddressMutation = () =>
   usePessimisticMutation({
     queryKey: QUERY_KEY.ADDRESSES,
     mutationFn: addAddress,
-    onSuccess:
-      ({ id }, { name, phone, mainAddress, detailAddress, postcode }) =>
-      addresses =>
-        [{ id, recipient: name, recipientPhone: phone, mainAddress, detailAddress, postcode }, ...addresses],
+    onSuccess(newAddress) {
+      return addresses => [...addresses, newAddress];
+    },
   });
 
 export default useAddAddressMutation;

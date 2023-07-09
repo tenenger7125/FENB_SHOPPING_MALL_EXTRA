@@ -6,8 +6,8 @@ const useChangeDefaultAddressMutation = () =>
   useGenericMutation({
     queryKey: QUERY_KEY.ADDRESSES,
     mutationFn: changeDefaultAddress,
-    onMutate(id) {
-      return addresses => addresses.map(address => ({ ...address, isDefault: address.id === id }));
+    onMutate(addressId) {
+      return addresses => addresses.map(address => ({ ...address, isDefault: address._id === addressId }));
     },
   });
 

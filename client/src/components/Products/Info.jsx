@@ -9,8 +9,8 @@ const Info = ({
 }) => {
   const { colorScheme } = useMantineColorScheme();
 
-  const handleSizeClick = selectedSize => () => {
-    setCurrentSelectedSize(selectedSize);
+  const handleSizeClick = size => () => {
+    setCurrentSelectedSize(size);
     setIsSizeSelected(true);
   };
 
@@ -28,10 +28,10 @@ const Info = ({
             border: `${!isSizeSelected && `1px solid ${theme.colors.red[6]}`}`,
             borderRadius: '0.4rem',
           })}>
-          {stocks.map(({ size, stock }) => (
+          {stocks.map(({ size, quantity }) => (
             <Button
               key={size}
-              disabled={!stock}
+              disabled={!quantity}
               fw="normal"
               fz="1.6rem"
               h="4rem"

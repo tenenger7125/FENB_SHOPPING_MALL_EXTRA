@@ -3,14 +3,14 @@ import { useQuery } from '@tanstack/react-query';
 
 import { productsQuery } from 'api/query';
 
-const getIdFromPath = pathname => +pathname.split('/').at(-1);
+const getIdFromPath = pathname => pathname.split('/').at(-1);
 
 const useCurrentProduct = () => {
   const { pathname } = useLocation();
 
   const { data: products } = useQuery(productsQuery());
 
-  const currentProduct = products?.find(product => product.id === getIdFromPath(pathname));
+  const currentProduct = products?.find(product => product._id === getIdFromPath(pathname));
 
   return currentProduct;
 };

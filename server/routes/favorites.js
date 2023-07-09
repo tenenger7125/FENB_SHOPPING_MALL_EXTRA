@@ -1,12 +1,11 @@
 const router = require('express').Router();
 
 const { authCheck } = require('../middleware/auth');
-const { toggleProductFavorite, getProduct, updateProductFavorite } = require('../controllers/products');
+const { updateProductFavorite } = require('../controllers/products');
 const {
-  addFavorite,
   deleteUserFavorite,
   getUserFavorites,
-  hasUserFavorite,
+  getUserFavorite,
   createUserFavorite,
 } = require('../controllers/favorites');
 
@@ -23,15 +22,23 @@ router.post('/me', authCheck, async (req, res) => {
   const { email } = req.locals;
   const { id: productId } = req.body;
 
-  const isFavorite = await hasUserFavorite(email, productId);
-  const delta = isFavorite ? -1 : 1;
+  const user = await createUserFavorite(email, productId);
+  await updateProductFavorite(productId, 1);
 
-  if (isFavorite) deleteUserFavorite(email, productId);
-  else createUserFavorite(email, productId);
+  res.send(user.favorites.at(-1));
+});
 
-  updateProductFavorite(productId, delta);
+router.delete('/me/:id', authCheck, async (req, res) => {
+  // OK!
+  const { email } = req.locals;
+  const { id: favoriteId } = req.params;
 
-  res.send({ message: `위시리스트에 ${isFavorite ? '제거' : '추가'}되었습니다.` });
+  const { productId } = await getUserFavorite(email, favoriteId);
+
+  deleteUserFavorite(email, favoriteId);
+  updateProductFavorite(productId, -1);
+
+  res.send({ message: `관심상품에서 제거되었습니다.` });
 });
 
 module.exports = router;

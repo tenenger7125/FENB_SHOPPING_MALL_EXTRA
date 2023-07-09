@@ -40,7 +40,7 @@ export const fetchCarts = async () => {
 };
 
 export const fetchAddresses = async () => {
-  const { data } = await axios.get('api/users/me/addresses');
+  const { data } = await axios.get('api/users/me/address');
   return data;
 };
 
@@ -93,12 +93,14 @@ export const addCoupon = async id => {
   return data;
 };
 
-export const toggleFavorite = async ({ id }) => {
-  await axios.post('/api/favorites/me', { id });
+export const addFavorite = async productId => {
+  const { data } = await axios.post('/api/favorites/me', { id: productId });
+  return data;
 };
 
-export const addCart = async ({ id, selectedSize }) => {
-  await axios.post(`/api/carts/me/${id}`, { selectedSize });
+export const addCart = async ({ id, size }) => {
+  const { data } = await axios.post(`/api/carts/me/${id}`, { size });
+  return data;
 };
 
 export const addAddress = async ({ name, phone, mainAddress, detailAddress, postcode }) => {
@@ -109,6 +111,7 @@ export const addAddress = async ({ name, phone, mainAddress, detailAddress, post
     detailAddress,
     postcode,
   });
+
   return data;
 };
 
@@ -116,18 +119,22 @@ export const order = async form => {
   await axios.post('/api/order/pay', form);
 };
 
-export const changeCartQuantity = async ({ id, selectedSize, quantity }) => {
-  await axios.patch(`/api/carts/me/${id}`, { selectedSize, quantity });
+export const changeCartQuantity = async ({ id, size, quantity }) => {
+  await axios.patch(`/api/carts/me/${id}`, { size, quantity });
 };
 
 export const changeDefaultAddress = async id => {
   await axios.patch(`/api/users/me/address/default/${id}`);
 };
 
-export const removeCart = async ({ id, selectedSize }) => {
-  await axios.delete(`/api/carts/me/${id}?selectedSize=${selectedSize}`);
+export const removeCart = async id => {
+  await axios.delete(`/api/carts/me/${id}`);
 };
 
 export const removeAddress = async id => {
   await axios.delete(`/api/users/me/address/${id}`);
+};
+
+export const removeFavorite = async favoriteId => {
+  await axios.delete(`/api/favorites/me/${favoriteId}`);
 };

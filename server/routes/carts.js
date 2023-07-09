@@ -5,7 +5,7 @@ const {
   deleteUserCart,
   getUserCart,
   createUserCart,
-  getSelectedUserCarts,
+  countSelectedUserCarts,
   deleteQuantityZero,
 } = require('../controllers/carts');
 const { getProductStockBySize } = require('../controllers/stocks');
@@ -23,21 +23,18 @@ router.post('/me/:id', authCheck, cartStockCheck, async (req, res) => {
   // OK!
   const { email } = req.locals;
   const { id } = req.params;
-  const { selectedSize, quantity = 1 } = req.body;
+  const { size, quantity = 1 } = req.body;
 
   // 이번에 요청한 상품의 재고 확인
-  const selectedSizeCarts = await getSelectedUserCarts(email, id, selectedSize);
-
-  const stock = await getProductStockBySize(id, selectedSize);
-  const selectedQuantity = selectedSizeCarts.reduce((acc, cur) => acc + cur.quantity, 0) + quantity;
+  const stock = await getProductStockBySize(id, size);
+  const selectedQuantity = (await countSelectedUserCarts(email, id, size)) + quantity;
 
   if (stock.quantity < selectedQuantity)
     return res.status(406).send({ message: '상품의 재고가 없습니다. 수량을 다시 선택해주세요' });
 
-  //❗ 같은 상품이면서 같은 수량일 경우, 합치는 것 해야한다.
-  createUserCart(email, id, selectedSize, quantity);
+  const cart = await createUserCart(email, id, size, quantity);
 
-  res.send({ message: '장바구니에 상품이 정상적으로 추가되었습니다.' });
+  res.send(cart);
 });
 
 // cart 변경
@@ -45,31 +42,30 @@ router.patch('/me/:id', authCheck, cartStockCheck, async (req, res) => {
   // OK!
   const { email } = req.locals;
   const { id: cartId } = req.params;
-  const { selectedSize, quantity = 1 } = req.body;
+  const { size, quantity = 1 } = req.body;
 
   // 이번에 요청한 상품의 재고 확인
-  const cart = await getUserCart(email, cartId, selectedSize);
+  const cart = await getUserCart(email, cartId, size);
 
-  if (!cart.productId) return res.status(406).send({ message: '잘못된 상품을 선택했습니다.' });
+  if (!cart?.productId) return res.status(406).send({ message: '잘못된 상품을 선택했습니다.' });
 
-  const stock = await getProductStockBySize(cart.productId, selectedSize);
+  const stock = await getProductStockBySize(cart.productId, size);
 
   if (stock.quantity < quantity)
     return res.status(406).send({ message: '상품의 재고가 없습니다. 수량을 다시 선택해주세요' });
 
-  await updateUserCart(email, cartId, selectedSize, quantity);
+  await updateUserCart(email, cartId, size, quantity);
   await deleteQuantityZero(email);
 
   res.send({ message: '장바구니 상품이 변경되었습니다.' });
 });
 
 // 삭제
-router.delete('/:id', authCheck, cartStockCheck, async (req, res) => {
+router.delete('/me/:id', authCheck, cartStockCheck, async (req, res) => {
   const { email } = req.locals;
-  const selectedSize = +req.query.selectedSize;
   const { id: cartId } = req.params;
 
-  await deleteUserCart(email, cartId, selectedSize);
+  await deleteUserCart(email, cartId);
   res.send({ message: '장바구니 상품이 삭제되었습니다.' });
 });
 

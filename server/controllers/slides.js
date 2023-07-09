@@ -17,7 +17,6 @@ const getSlides = async () => {
   try {
     const slides = await Slide.find();
 
-    console.log(slides);
     return slides;
   } catch (err) {
     console.error('슬라이드를 가져오는데 실패했습니다.', err);

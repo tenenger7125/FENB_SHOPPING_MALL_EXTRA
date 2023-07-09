@@ -23,7 +23,7 @@ const OrderComplete = () => {
       </Title>
       <Stack align="center" justify="center" mih="5rem" px="0.8rem" spacing={0}>
         <OrderInfo history={history} />
-        <OrderProducts products={history.products} />
+        <OrderProducts products={history.purchased} />
         <Button
           color={colorScheme === 'dark' ? 'gray.6' : 'dark'}
           fz="1.6rem"

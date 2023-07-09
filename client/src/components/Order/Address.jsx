@@ -13,7 +13,7 @@ import { addressSchema } from 'schema';
 const Address = ({ form: { addressId }, updateForm, mode, handleEditModeClick, handleAddModeClick }) => {
   const { colors } = useMantineTheme();
 
-  const addresses = useAddresses();
+  const address = useAddresses();
 
   const isNotMode = !(mode.add || mode.edit);
   const { handleSubmit, register, formState, trigger, setValue, reset } = useForm({
@@ -31,6 +31,7 @@ const Address = ({ form: { addressId }, updateForm, mode, handleEditModeClick, h
 
   const handleUpdateDefaultAddressClick = addressId => e => {
     e.stopPropagation();
+    updateForm({ addressId });
     changeDefaultAddress(addressId);
   };
 
@@ -68,8 +69,8 @@ const Address = ({ form: { addressId }, updateForm, mode, handleEditModeClick, h
       </Group>
 
       {isNotMode &&
-        addresses.map(
-          ({ id, recipient, mainAddress, detailAddress, postcode, recipientPhone }) =>
+        address.map(
+          ({ _id: id, recipient, mainAddress, detailAddress, postcode, recipientPhone }) =>
             addressId === id && (
               <Stack key={id} spacing={0} w="100%">
                 <Title fz="1.6rem" mb="0.4rem">
@@ -85,7 +86,7 @@ const Address = ({ form: { addressId }, updateForm, mode, handleEditModeClick, h
         )}
       {mode.edit && (
         <Stack px="2rem">
-          {addresses.map(({ id, recipient, mainAddress, detailAddress, postcode, recipientPhone, isDefault }) => (
+          {address.map(({ _id: id, recipient, mainAddress, detailAddress, postcode, recipientPhone, isDefault }) => (
             <Container
               key={id}
               p="0.8rem"

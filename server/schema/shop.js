@@ -36,15 +36,16 @@ const HistoriesSchema = new mongoose.Schema(
   {
     address: AddressSchema,
     purchased: [CartsSchema],
-    totalPrice: String,
-    discountAmount: String,
-    discountedTotalPrice: String,
+    totalPrice: Number,
+    discountAmount: Number,
+    discountedTotalPrice: Number,
     paymentMethod: String,
   },
   { timestamps: true }
 );
 
 const CouponSchema = new mongoose.Schema({
+  title: String,
   discountRate: Number,
   discountPrice: Number,
   minimumPrice: Number,

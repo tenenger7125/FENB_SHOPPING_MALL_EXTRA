@@ -5,7 +5,9 @@ import { cartsQuery } from 'api/query';
 const useTotalPrice = () => {
   const { data: totalPrice } = useQuery(
     cartsQuery({
-      select: carts => carts.reduce((acc, cart) => acc + cart.quantity * cart.price, 0),
+      select(carts) {
+        return carts.reduce((acc, cart) => acc + cart.quantity * cart.price, 0);
+      },
     })
   );
 

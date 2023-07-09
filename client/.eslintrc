@@ -25,6 +25,7 @@
     }
   },
   "rules": {
+    "no-underscore-dangle": "off",
     // before define to use rule
     "no-use-before-define": "off",
     // other scope variable declare rule

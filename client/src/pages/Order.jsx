@@ -25,7 +25,7 @@ const Order = () => {
 
   const [discount, setDiscount] = useState({ discountAmount: 0, discountedTotalPrice: totalPrice });
   const [form, setForm] = useState({
-    addressId: addresses[0]?.id ?? null,
+    addressId: addresses[0]?._id ?? null,
     couponId: null,
     paymentMethod: PAYMENT_METHODS[0].value,
   });

@@ -68,7 +68,6 @@ const router = createHashRouter([
       },
       {
         path: `${PATH.PRODUCTS}/:id`,
-        loader: favoritesLoader,
         element: <Products />,
       },
       {

@@ -36,11 +36,7 @@ const CartList = () => {
         </Stack>
       )}
 
-      {carts.length ? (
-        carts.map(cart => <CartItem key={`${cart.id}-${cart.selectedSize}`} cart={cart} />)
-      ) : (
-        <NoProduct pageName="장바구니" />
-      )}
+      {carts.length ? carts.map(cart => <CartItem key={cart._id} cart={cart} />) : <NoProduct pageName="장바구니" />}
     </Stack>
   );
 };
