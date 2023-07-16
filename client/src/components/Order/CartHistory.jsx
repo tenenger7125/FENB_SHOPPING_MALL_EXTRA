@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { Stack, Title, Group, Text, useMantineTheme, Accordion, Image, Flex } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
 
 import { cartsQuery } from 'api/query';
+import { useMediaQuery } from 'hooks';
 import { useTotalPrice } from 'hooks/carts';
 import { MEDIAQUERY_WIDTH } from 'constants';
 

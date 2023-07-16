@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 import { useQuery } from '@tanstack/react-query';
 
 import { Accordion, Group, Radio, Stack, Text, Title, useMantineTheme } from '@mantine/core';
@@ -15,14 +17,22 @@ const Coupon = ({ handleCouponIdUpdate }) => {
   const { data: coupons } = useQuery(couponsQuery());
   const totalPrice = useTotalPrice();
 
+  const selectedCoupon = useRef('쿠폰을 선택하세요');
+
+  const handleSelectCouponChange = e => {
+    handleCouponIdUpdate();
+
+    selectedCoupon.current = coupons.find(({ _id }) => _id === e).title;
+  };
+
   return (
     <Stack>
       <Title py="1.2rem">쿠폰</Title>
       <Accordion variant="separated">
         <Accordion.Item value="coupons">
-          <Accordion.Control fz="1.6rem">쿠폰을 선택하세요</Accordion.Control>
+          <Accordion.Control fz="1.6rem">{selectedCoupon.current}</Accordion.Control>
           <Accordion.Panel>
-            <Radio.Group name="coupons" onChange={handleCouponIdUpdate}>
+            <Radio.Group name="coupons" onChange={handleSelectCouponChange}>
               <Stack mt="xs">
                 {coupons.map(({ _id: id, title, endTime, minimumPrice }) => (
                   <Radio
@@ -42,6 +52,9 @@ const Coupon = ({ handleCouponIdUpdate }) => {
                     }
                     styles={{
                       labelWrapper: { width: '100%' },
+                      label: { cursor: 'pointer' },
+                      radio: { cursor: 'pointer' },
+                      inner: { transform: 'translate3D(0, 3px, 0)' },
                     }}
                   />
                 ))}

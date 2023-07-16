@@ -31,7 +31,8 @@ const SignIn = () => {
         autoClose: 2000,
         title: '알림',
         message: `${user.username}님 환영합니다.`,
-        sx: { div: { fontSize: '1.5rem' } },
+        sx: { div: { fontSize: '1.6rem' } },
+        withCloseButton: false,
       });
 
       setUser(user);
@@ -42,7 +43,8 @@ const SignIn = () => {
         autoClose: 2000,
         title: '알림',
         message: '등록되지 않은 사용자입니다.',
-        sx: { div: { fontSize: '1.5rem' } },
+        sx: { div: { fontSize: '1.6rem' } },
+        withCloseButton: false,
       });
     }
   };

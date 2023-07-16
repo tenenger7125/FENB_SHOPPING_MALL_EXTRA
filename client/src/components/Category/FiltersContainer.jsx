@@ -36,7 +36,9 @@ const FiltersContainer = ({ filters, handleResetFiltersClick, handleCheckFilters
       <Drawer.Root opened={opened} onClose={close}>
         <Drawer.Overlay />
         <Drawer.Content>
-          <Drawer.Header m="1rem 0 0 1rem" />
+          <Drawer.Header m="1rem 0 0 1rem">
+            <Drawer.CloseButton size="2.8rem" />
+          </Drawer.Header>
           <Drawer.Body>
             <Filters
               filters={filters}
@@ -47,7 +49,7 @@ const FiltersContainer = ({ filters, handleResetFiltersClick, handleCheckFilters
         </Drawer.Content>
       </Drawer.Root>
 
-      <Button fz="1.6rem" h="4rem" mt="1rem" radius="md" variant="default" onClick={open}>
+      <Button fz="1.6rem" h="4rem" my="1rem" radius="md" variant="default" onClick={open}>
         필터
         <BiFilter size="2.5rem" />
       </Button>

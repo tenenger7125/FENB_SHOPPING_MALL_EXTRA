@@ -12,7 +12,7 @@ const OrderComplete = () => {
 
   const navigate = useNavigate();
 
-  const { data: history } = useQuery(historyQuery());
+  const { data: history } = useQuery(historyQuery({ select: histories => histories[0] }));
 
   const handleMainClick = () => navigate(PATH.MAIN);
 

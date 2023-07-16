@@ -78,6 +78,16 @@ const getUserAddressOne = async (email, _id) => {
 };
 
 // ❗ 이름, 비밀번호, 휴대전화번호 변경하는거 추가 필요
+const updateUserInfo = async (email, newInfo) => {
+  // OK!
+  try {
+    const updatedUserInfo = await User.findOneAndUpdate({ email }, { $set: newInfo }, { new: true });
+
+    return updatedUserInfo;
+  } catch (err) {
+    console.error('유저 정보를 변경하는데 실패했습니다.', err);
+  }
+};
 
 // 배송지 수정
 const updateUserAddress = async (email, _id, address) => {
@@ -169,8 +179,25 @@ const hasUserEmail = async email => {
 };
 
 //❗ 비밀번호 확인하는거 추가하기
+const hasUserPassword = async (email, password) => {
+  try {
+    const count = await User.countDocuments({ email, password });
+
+    return count === 1;
+  } catch (err) {
+    console.error('비밀번호가 일치하지 않습니다.', err);
+  }
+};
 
 //❗ 계정 삭제 추가하기
+const deleteUser = async email => {
+  // OK!
+  try {
+    await User.findOneAndDelete({ email });
+  } catch (err) {
+    console.error('회원 정보을 삭제하는데 실패했습니다.', err);
+  }
+};
 
 module.exports = {
   createUser,
@@ -178,10 +205,13 @@ module.exports = {
   getUser,
   getUserAddress,
   getUserAddressOne,
+  updateUserInfo,
   updateUserAddress,
   updateUserDefaultAddress,
   deleteUserAddress,
   confirmUser,
   sortUserDefaultAddress,
   hasUserEmail,
+  hasUserPassword,
+  deleteUser,
 };

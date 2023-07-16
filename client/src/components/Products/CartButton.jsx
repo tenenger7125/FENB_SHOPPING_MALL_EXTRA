@@ -57,10 +57,10 @@ const CartButton = ({ currentProduct, currentSelectedSize, isSignInRef, isSizeSe
             {hasStock ? (
               <>
                 <Modal.Header>
-                  <Modal.Title fw="600" fz="1.6rem">
+                  <Modal.Title fw="600" fz="1.9rem">
                     장바구니에 추가 되었습니다.
                   </Modal.Title>
-                  <Modal.CloseButton size="1.6rem" />
+                  <Modal.CloseButton size="2.8rem" />
                 </Modal.Header>
                 <Modal.Body>
                   <Stack pt="1rem">

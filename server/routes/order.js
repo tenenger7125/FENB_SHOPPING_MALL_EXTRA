@@ -92,7 +92,7 @@ router.get('/history', authCheck, async (req, res) => {
   const { email } = req.locals;
   const histories = await getUserHistories(email);
 
-  res.send(histories.at(0));
+  res.send(histories);
 });
 
 module.exports = router;

@@ -39,6 +39,10 @@ const Filters = ({
                 checked={priceFilters[i]}
                 label={text}
                 size="lg"
+                styles={() => ({
+                  label: { cursor: 'pointer' },
+                  input: { cursor: 'pointer' },
+                })}
                 onChange={handleCheckFiltersClick({ rangeIdx })}
               />
             ))}
@@ -78,7 +82,7 @@ const Filters = ({
                 <UnstyledButton>
                   <ColorSwatch
                     color={color}
-                    selected={colorFilters.at(i)}
+                    selected={colorFilters[i]}
                     size="3rem"
                     styles={theme => ({
                       '.mantine-ColorSwatch-shadowOverlay': {
@@ -110,6 +114,10 @@ const Filters = ({
                 checked={genderFilters[i]}
                 label={kr}
                 size="lg"
+                styles={() => ({
+                  label: { cursor: 'pointer' },
+                  input: { cursor: 'pointer' },
+                })}
                 onChange={handleCheckFiltersClick({ gender: en })}
               />
             ))}
@@ -127,6 +135,10 @@ const Filters = ({
                 checked={brandFilters[i]}
                 label={kr}
                 size="lg"
+                styles={() => ({
+                  label: { cursor: 'pointer' },
+                  input: { cursor: 'pointer' },
+                })}
                 onChange={handleCheckFiltersClick({ brand: en })}
               />
             ))}

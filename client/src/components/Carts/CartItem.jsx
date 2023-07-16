@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -12,17 +12,27 @@ import { PATH } from 'constants';
 const CartItem = ({ cart: { _id: id, productId, category, color, name, price, imgURL, size, quantity } }) => {
   const { colors, colorScheme } = useMantineTheme();
 
-  const { mutate: changeCartQuantityMuatate } = useChangeCartQuantityMutation();
-  const { mutate: removeCartMutate } = useRemoveCartMutation();
+  const { mutate: changeCartQuantity } = useChangeCartQuantityMutation();
+  const { mutate: removeCart } = useRemoveCartMutation();
   const maxQuantity = useQuantityOfStocks(id, size);
-  const handlers = useRef(null);
-
-  const handleUpdateCartQuantityChange = quantity => changeCartQuantityMuatate({ id, size, quantity });
-  const handleRemoveCartClick = () => removeCartMutate(id);
-  const handleIncreaseCartQuantityClick = () => handlers.current.increment();
-  const handleDecreaseCartQuantityClick = () => handlers.current.decrement();
 
   // ❗ 수량 변경했을 때, 재고보다 더 담을 경우, 더 담을 수 없다고 UI 적으로 표현하기 toast?
+  const [isStockEmpty, setIsStockEmpty] = useState(false);
+  const handlers = useRef(null);
+
+  const handleUpdateCartQuantityChange = quantity => {
+    changeCartQuantity({ id, size, quantity });
+    setIsStockEmpty(false);
+  };
+  const handleRemoveCartClick = () => removeCart(id);
+  const handleIncreaseCartQuantityClick = () => {
+    handlers.current.increment();
+    if (quantity === maxQuantity) setIsStockEmpty(true);
+  };
+  const handleDecreaseCartQuantityClick = () => {
+    handlers.current.decrement();
+    if (quantity === 1) setIsStockEmpty(true);
+  };
 
   return (
     <Stack
@@ -89,6 +99,11 @@ const CartItem = ({ cart: { _id: id, productId, category, color, name, price, im
                   +
                 </ActionIcon>
               </Group>
+              {isStockEmpty && (
+                <Text c={colorScheme === 'dark' ? 'red.9' : 'red.5'} fz="1.4rem">
+                  재고가 부족합니다
+                </Text>
+              )}
             </Stack>
             <Stack c={colorScheme === 'dark' ? 'gray.6' : colors.gray[1]} spacing={0}>
               <Title c={colorScheme === 'dark' ? 'gray.6' : 'dark'} fz="1.6rem">

@@ -43,7 +43,8 @@ const SignUp = () => {
         autoClose: 2000,
         title: '알림',
         message: '회원가입이 완료되었습니다.',
-        sx: { div: { fontSize: '1.5rem' } },
+        sx: { div: { fontSize: '1.6rem' } },
+        withCloseButton: false,
       });
     } catch (error) {
       notifications.show({
@@ -51,7 +52,8 @@ const SignUp = () => {
         autoClose: 2000,
         title: '알림',
         message: '필수 정보가 전달되지 않았습니다.',
-        sx: { div: { fontSize: '1.5rem' } },
+        sx: { div: { fontSize: '1.6rem' } },
+        withCloseButton: false,
       });
     }
   };

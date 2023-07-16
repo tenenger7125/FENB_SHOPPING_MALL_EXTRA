@@ -16,7 +16,7 @@ const Info = ({
 
   return (
     <>
-      <Text c={colorScheme === 'dark' ? 'gray.4' : 'gray.8'} size="1.4rem">
+      <Text c={colorScheme === 'dark' ? 'gray.4' : 'gray.8'} size={colorScheme === 'dark' ? '1.6rem' : '1.4rem'}>
         {brand.kr} / {feature}
       </Text>
       <Text fw={500} m="2rem 0" size="2rem">{`${price.toLocaleString('ko-KR')} 원`}</Text>

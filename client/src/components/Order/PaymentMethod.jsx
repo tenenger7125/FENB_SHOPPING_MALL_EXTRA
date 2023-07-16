@@ -27,6 +27,10 @@ const PaymentMethod = ({ form: { paymentMethod }, updateForm }) => {
                   <Text span>{label}</Text>
                 </Group>
               }
+              styles={{
+                label: { cursor: 'pointer' },
+                radio: { cursor: 'pointer' },
+              }}
             />
           ))}
         </Stack>

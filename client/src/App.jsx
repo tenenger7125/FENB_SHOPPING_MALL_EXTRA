@@ -1,18 +1,5 @@
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 
-import PrivateRoute from 'components/PrivateRoute';
-import {
-  slidesLoader,
-  cartsLoader,
-  couponsLoader,
-  favoritesLoader,
-  filteredProductsLoader,
-  historyLoader,
-  pageProductsLoader,
-  productsLoader,
-  addressesLoader,
-} from 'api/loader';
-import { PATH } from 'constants';
 import {
   Root,
   Cart,
@@ -25,7 +12,27 @@ import {
   SignUp,
   WishList,
   NotFound,
-} from './pages';
+  MyPage,
+  History,
+  Account,
+  Address,
+  Withdrawal,
+  HistoryDetail,
+} from 'pages';
+import PrivateRoute from 'components/PrivateRoute';
+import {
+  slidesLoader,
+  cartsLoader,
+  couponsLoader,
+  favoritesLoader,
+  filteredProductsLoader,
+  historyLoader,
+  pageProductsLoader,
+  productsLoader,
+  addressesLoader,
+  userLoader,
+} from 'api/loader';
+import { PATH } from 'constants';
 
 const router = createHashRouter([
   {
@@ -83,6 +90,36 @@ const router = createHashRouter([
         path: PATH.ORDER_COMPLETE,
         loader: historyLoader,
         element: <PrivateRoute element={<OrderComplete />} redirectTo={PATH.SIGNIN} />,
+      },
+      {
+        path: PATH.MYPAGE,
+        element: <PrivateRoute element={<MyPage />} redirectTo={PATH.SIGNIN} />,
+        children: [
+          {
+            path: PATH.ACCOUNT,
+            loader: userLoader,
+            element: <PrivateRoute element={<Account />} redirectTo={PATH.SIGNIN} />,
+          },
+          {
+            path: PATH.WITHDRAWAL,
+            element: <PrivateRoute element={<Withdrawal />} redirectTo={PATH.SIGNIN} />,
+          },
+          {
+            path: PATH.ADDRESS,
+            loader: addressesLoader,
+            element: <PrivateRoute element={<Address />} redirectTo={PATH.SIGNIN} />,
+          },
+          {
+            path: PATH.HISTORY,
+            loader: historyLoader,
+            element: <PrivateRoute element={<History />} redirectTo={PATH.SIGNIN} />,
+          },
+          {
+            path: `${PATH.HISTORY}/:id`,
+            loader: historyLoader,
+            element: <PrivateRoute element={<HistoryDetail />} redirectTo={PATH.SIGNIN} />,
+          },
+        ],
       },
       {
         path: '/*',
