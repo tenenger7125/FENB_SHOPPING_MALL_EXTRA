@@ -4,7 +4,8 @@ import { useMediaQuery } from 'hooks';
 import { MEDIAQUERY_WIDTH } from 'constants';
 
 const OrderProducts = ({ products }) => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
+  const mobileMatches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.MOBILE}px)`);
   const { colorScheme } = useMantineColorScheme();
 
   return (
@@ -18,7 +19,7 @@ const OrderProducts = ({ products }) => {
         spacing="2rem"
         sx={{ border: '1px solid lightgray', borderRadius: '5px' }}>
         {products.map(({ _id: id, size, quantity, name, price, color, imgURL }) => (
-          <Group key={id} fz="1.4rem" justify="center" sx={{ flexWrap: 'nowrap' }}>
+          <Group key={id} fz={mobileMatches ? '1.4rem' : '1.2rem'} justify="center" sx={{ flexWrap: 'nowrap' }}>
             <div style={{ width: '20%', minWidth: `${matches ? '10.8rem' : '7.8rem'}` }}>
               <Image
                 alt={name}
@@ -30,7 +31,10 @@ const OrderProducts = ({ products }) => {
             </div>
             <Group align="flex-start" justify="center" my="auto" position="apart" w="70%">
               <Stack justify="center" maw="fit-content" spacing="0.2rem">
-                <Title c={colorScheme === 'dark' ? 'gray.4' : '#111'} fw="bold" fz="1.6rem">
+                <Title
+                  c={colorScheme === 'dark' ? 'gray.4' : '#111'}
+                  fw="bold"
+                  fz={mobileMatches ? '1.6rem' : '1.4rem'}>
                   {name}
                 </Title>
                 <Text pl="0.2rem">사이즈 : {size}</Text>
@@ -40,7 +44,7 @@ const OrderProducts = ({ products }) => {
                 </Text>
               </Stack>
               <Stack>
-                <Text c={colorScheme === 'dark' ? 'gray.4' : '#111'} fw="bold" fz="1.6rem">
+                <Text c={colorScheme === 'dark' ? 'gray.4' : '#111'} fw="bold" fz={mobileMatches ? '1.6rem' : '1.4rem'}>
                   {(price * quantity).toLocaleString('ko-KR')} 원
                 </Text>
               </Stack>

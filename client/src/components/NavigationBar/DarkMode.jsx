@@ -1,14 +1,18 @@
 import { ActionIcon, Tooltip, useMantineColorScheme } from '@mantine/core';
 import { TbMoonFilled, TbSunFilled } from 'react-icons/tb';
 
+import { useMediaQuery } from 'hooks';
+import { MEDIAQUERY_WIDTH } from 'constants';
+
 const DarkMode = () => {
+  const mobileMatches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.MOBILE}px)`);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
   return (
     <Tooltip label="다크모드">
       <ActionIcon
         color={colorScheme === 'dark' ? 'yellow.4' : 'gray.9'}
-        size="xl"
+        size={mobileMatches ? 'xl' : 'lg'}
         sx={{
           ':hover': { backgroundColor: 'transparent' },
         }}

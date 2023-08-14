@@ -15,7 +15,7 @@ import { PATH, QUERY_KEY, MEDIAQUERY_WIDTH } from 'constants';
 
 const Withdrawal = () => {
   const { colors, colorScheme } = useMantineTheme();
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
 
   const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ const Withdrawal = () => {
   return (
     <Stack pb="2rem" px="0.8rem" spacing="3.2rem" w="100%">
       <Title
-        fz="2.4rem"
+        fz={matches ? '2.4rem' : '2.1rem'}
         mb="3.2rem"
         pb="2rem"
         sx={{ borderBottom: `2px solid ${colorScheme === 'dark' ? colors.gray[6] : colors.gray[8]}` }}>
@@ -143,7 +143,7 @@ const Withdrawal = () => {
 };
 
 const DotText = ({ children }) => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
 
   return (
     <Group fz={matches ? '1.8rem' : '1.7rem'} py="0.2rem" sx={{ flexWrap: 'nowrap' }}>

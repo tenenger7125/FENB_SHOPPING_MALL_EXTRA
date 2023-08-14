@@ -1,4 +1,4 @@
-export { default as useGenericMutation } from './useGenericMutation';
+export { default as useOptimisticMutation } from './useOptimisticMutation';
 export { default as useChangeDefaultAddressMutation } from './useChangeDefaultAddressMutation';
 export { default as useRemoveAddressMutation } from './useRemoveAddressMutation';
 export { default as useAddCartMutation } from './useAddCartMutation';
@@ -7,7 +7,9 @@ export { default as useRemoveCartMutation } from './useRemoveCartMutation';
 export { default as useAddAddressMutation } from './useAddAddressMutation';
 export { default as usePessimisticMutation } from './usePessimisticMutation';
 export { default as useOrderMutation } from './useOrderMutation';
-export { default as useUpdateUserInfoMutation } from './useUpdateUserInfoMutation';
-export { default as useUpdateAddress } from './useUpdateAddress';
+export { default as useUpdatePasswordMutation } from './useUpdatePasswordMutation';
+export { default as useUpdateNameMutation } from './useUpdateNameMutation';
+export { default as useUpdatePhoneMutation } from './useUpdatePhoneMutation';
+export { default as useUpdateAddressMutation } from './useUpdateAddressMutation';
 export { default as useAddWishItemMutation } from './useAddWishItemMutation';
 export { default as useRemoveWishItemMutation } from './useRemoveWishItemMutation';

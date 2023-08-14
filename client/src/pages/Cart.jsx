@@ -5,7 +5,7 @@ import { useMediaQuery } from 'hooks';
 import { MEDIAQUERY_WIDTH } from 'constants';
 
 const Cart = () => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
 
   return (
     <Container fz="1.6rem" size="1200px" w="100%">

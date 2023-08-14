@@ -1,14 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, Center, CloseButton, Container, Group, Stack, Text, Title, useMantineTheme } from '@mantine/core';
+import { Button, Center, Container, Group, Stack, Text, Title, useMantineTheme } from '@mantine/core';
 import { BsCheck2 } from 'react-icons/bs';
-import { FaHome } from 'react-icons/fa';
 
 import { FormAddressInput, FormInput, FormPhoneInput } from 'components/Sign';
 import { useAddresses } from 'hooks/address';
 import { useAddAddressMutation, useChangeDefaultAddressMutation, useRemoveAddressMutation } from 'hooks/mutation';
 import { addressSchema } from 'schema';
+import { AddressItem } from '.';
 
 const Address = ({ form: { addressId }, updateForm, mode, handleEditModeClick, handleAddModeClick }) => {
   const { colors } = useMantineTheme();
@@ -86,54 +86,14 @@ const Address = ({ form: { addressId }, updateForm, mode, handleEditModeClick, h
         )}
       {mode.edit && (
         <Stack px="2rem">
-          {address.map(({ _id: id, recipient, mainAddress, detailAddress, postcode, recipientPhone, isDefault }) => (
-            <Container
-              key={id}
-              p="0.8rem"
-              size="content-fit"
-              sx={{
-                width: '100%',
-                border: `1px solid ${id === addressId ? colors.blue[6] : colors.gray[6]}`,
-                borderRadius: '5px',
-                cursor: 'pointer',
-                ':hover': { borderColor: colors.blue[6] },
-              }}
-              onClick={handleSelectAddressClick(id)}>
-              <Group align="flex-start" position="apart" sx={{ flexWrap: 'nowrap' }}>
-                <Stack spacing={0}>
-                  <Group align="center" justify="center" spacing="0.4rem">
-                    <Text>{recipient}</Text>
-                    {isDefault && <FaHome />}
-                  </Group>
-                  <Text>{mainAddress}</Text>
-                  <Text>{detailAddress}</Text>
-                  <Text>{postcode}</Text>
-                  <Text>{recipientPhone}</Text>
-                </Stack>
-                <Stack align="flex-end" h="12.4rem" justify="space-between">
-                  <CloseButton
-                    color="dark"
-                    h="3.2rem"
-                    iconSize="1.6rem"
-                    p="0.4rem"
-                    sx={{ ':hover': { background: 'transparent', border: `1px solid ${colors.blue[6]}` } }}
-                    w="3.2rem"
-                    onClick={handleRemoveAddressClick(id)}
-                  />
-                  <Button
-                    color="dark"
-                    h="3.2rem"
-                    py="0.8rem"
-                    sx={{ ':hover': { background: 'transparent', border: `1px solid ${colors.blue[6]}` } }}
-                    variant="subtle"
-                    onClick={handleUpdateDefaultAddressClick(id)}>
-                    <Text fw="normal" fz="1.2rem">
-                      기본 배송지로 변경
-                    </Text>
-                  </Button>
-                </Stack>
-              </Group>
-            </Container>
+          {address.map(address => (
+            <AddressItem
+              key={address._id}
+              address={address}
+              handleRemoveAddressClick={handleRemoveAddressClick}
+              handleSelectAddressClick={handleSelectAddressClick}
+              handleUpdateDefaultAddressClick={handleUpdateDefaultAddressClick}
+            />
           ))}
           <Group position="right">
             <Button

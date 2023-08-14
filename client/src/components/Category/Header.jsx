@@ -1,6 +1,8 @@
 import { Container, Select, Flex, useMantineColorScheme } from '@mantine/core';
 
+import { useMediaQuery } from 'hooks';
 import { useCategory } from 'hooks/products';
+import { MEDIAQUERY_WIDTH } from 'constants';
 
 const SORT_OPTIONS = [
   { value: 'favorite', label: '추천순' },
@@ -10,6 +12,7 @@ const SORT_OPTIONS = [
 ];
 
 const Header = ({ sortOption, searchValue, productCount, handleSelectSortOptionClick }) => {
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
   const { colorScheme } = useMantineColorScheme();
 
   const categories = useCategory();
@@ -21,8 +24,9 @@ const Header = ({ sortOption, searchValue, productCount, handleSelectSortOptionC
 
   return (
     <Flex
-      align="center"
+      align={matches && 'center'}
       bg={colorScheme === 'dark' ? 'dark.7' : 'white'}
+      direction={matches ? 'row' : 'column'}
       justify="space-between"
       pos="sticky"
       sx={{ zIndex: 99 }}
@@ -34,11 +38,11 @@ const Header = ({ sortOption, searchValue, productCount, handleSelectSortOptionC
       <Select
         data={SORT_OPTIONS}
         maxDropdownHeight={500}
-        size="xl"
+        size={matches ? 'xl' : 'md'}
         value={sortOption}
         styles={theme => ({
           input: {
-            fontSize: '1.5rem',
+            fontSize: '1.4rem',
             '&:focus': {
               borderColor: theme.colors.gray[4],
             },

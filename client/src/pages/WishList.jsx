@@ -22,7 +22,7 @@ import { useRemoveWishItemMutation } from 'hooks/mutation';
 import { MEDIAQUERY_WIDTH, PATH } from 'constants';
 
 const WishList = () => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
   const theme = useMantineTheme();
 
   const navigate = useNavigate();
@@ -53,8 +53,12 @@ const WishList = () => {
                   flexBasis: '50%',
                   maxWidth: '50%',
                 },
+                '@media (max-width: 480px)': {
+                  flexBasis: '100%',
+                  maxWidth: '100%',
+                },
               }}>
-              <Card fz="1.6rem" maw={matches ? '35rem' : '20rem'} padding="lg" withBorder>
+              <Card fz="1.6rem" maw={matches ? '35rem' : '20rem'} mx="auto" padding="lg" withBorder>
                 <Card.Section>
                   <Image alt={name} src={imgURL} sx={{ cursor: 'pointer' }} onClick={handleProductClick(productId)} />
                 </Card.Section>

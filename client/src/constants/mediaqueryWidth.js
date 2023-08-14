@@ -1,3 +1,6 @@
-const MEDIAQUERY_WIDTH = 768;
+const MEDIAQUERY_WIDTH = {
+  TABLET: 768,
+  MOBILE: 480,
+};
 
 export default MEDIAQUERY_WIDTH;

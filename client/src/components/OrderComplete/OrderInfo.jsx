@@ -4,14 +4,15 @@ import { PAYMENT_METHODS, MEDIAQUERY_WIDTH } from '../../constants';
 import { useMediaQuery } from '../../hooks';
 
 const OrderInfo = ({ history }) => {
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
+  const mobileMatches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.MOBILE}px)`);
+
   const { createdAt, paymentMethod, discountedTotalPrice, address } = history;
 
   const payment = PAYMENT_METHODS.find(methods => methods.value === paymentMethod).label;
 
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
-
   return (
-    <Stack p="2rem" w={matches ? '70%' : '90%'}>
+    <Stack fz={mobileMatches ? '1.6rem' : '1.4rem'} p="2rem" w={matches ? '70%' : '90%'}>
       <Title fz="2.4rem" mb="2rem" sx={{ textAlign: 'center' }}>
         주문 정보
       </Title>

@@ -1,9 +1,9 @@
 import { removeFavorite } from 'api/fetch';
-import { useGenericMutation } from 'hooks/mutation';
+import { useOptimisticMutation } from 'hooks/mutation';
 import { QUERY_KEY } from 'constants';
 
 const useRemoveWishItemMutation = () =>
-  useGenericMutation({
+  useOptimisticMutation({
     queryKey: QUERY_KEY.WISHLIST,
     mutationFn: removeFavorite,
     onMutate(favoriteId) {

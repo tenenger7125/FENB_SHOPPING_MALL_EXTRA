@@ -39,6 +39,7 @@ const FormInput = ({
       input: {
         fontSize: '1.6rem',
         backgroundColor: 'transparent',
+        width: '100%',
         height: '3.5rem',
         padding: '0',
         border: 'none',

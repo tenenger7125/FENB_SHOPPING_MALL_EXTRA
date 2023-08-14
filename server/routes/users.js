@@ -4,7 +4,9 @@ const {
   getUser,
   getUserAddress,
   createUserAddress,
-  updateUserInfo,
+  updatePassword,
+  updateName,
+  updatePhone,
   updateUserDefaultAddress,
   sortUserDefaultAddress,
   updateUserAddress,
@@ -52,19 +54,38 @@ router.post('/me/address', authCheck, async (req, res) => {
   res.send(address);
 });
 
-router.patch('/me', authCheck, async (req, res) => {
+// 비밀번호 변경
+router.patch('/me/password', authCheck, async (req, res) => {
   const { email } = req.locals;
-  const newUserInfo = req.body;
+  const newPassword = req.body;
 
-  if (newUserInfo.currentPassword) {
-    const isCorrespond = await hasUserPassword(email, newUserInfo.currentPassword);
+  const isCorrespond = await hasUserPassword(email, newPassword.currentPassword);
 
-    if (!isCorrespond) return res.status(400).send({ message: '현재 비밀번호와 일치하지 않습니다.' });
-  }
+  if (!isCorrespond) return res.status(400).send({ message: '현재 비밀번호와 일치하지 않습니다.' });
 
-  await updateUserInfo(email, newUserInfo);
+  const { password } = await updatePassword(email, newPassword);
 
-  res.send({ message: '계정 정보가 변경되었습니다.' });
+  res.send({ password: password.length });
+});
+
+// 이름 변경
+router.patch('/me/name', authCheck, async (req, res) => {
+  const { email } = req.locals;
+  const name = req.body;
+
+  await updateName(email, name);
+
+  res.send({ message: '이름을 성공적으로 변경했습니다.' });
+});
+
+// 전화번호 변경
+router.patch('/me/phone', authCheck, async (req, res) => {
+  const { email } = req.locals;
+  const phone = req.body;
+
+  await updatePhone(email, phone);
+
+  res.send({ message: '전화번호를 성공적으로 변경했습니다.' });
 });
 
 // 기본 배송지 변경
@@ -78,14 +99,21 @@ router.patch('/me/address/default/:id', authCheck, async (req, res) => {
   res.send({ message: '기본 배송지가 변경되었습니다.' });
 });
 
-router.patch('/me/address/:id', authCheck, (req, res) => {
+router.patch('/me/address/:id', authCheck, async (req, res) => {
   // OK!
   const { email } = req.locals;
   const id = req.params.id;
-  const newAddress = req.body;
+  const { recipient, recipientPhone, mainAddress, detailAddress, postcode } = req.body;
 
-  updateUserAddress(email, id, newAddress);
-  res.send({ message: '배송지가 수정되었습니다.' });
+  const address = await updateUserAddress(email, id, {
+    recipient,
+    recipientPhone,
+    mainAddress,
+    detailAddress,
+    postcode,
+  });
+
+  res.send(address);
 });
 
 router.delete('/me/address/:id', authCheck, async (req, res) => {

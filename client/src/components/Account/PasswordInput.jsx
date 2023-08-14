@@ -7,7 +7,7 @@ import { notifications } from '@mantine/notifications';
 import { ChangeButton } from 'components/Account';
 import { FormInput } from 'components/Sign';
 import { checkCorrespondPassword } from 'api/fetch';
-import { useUpdateUserInfoMutation } from 'hooks/mutation';
+import { useUpdatePasswordMutation } from 'hooks/mutation';
 import { passwordSchema } from 'schema';
 
 const PasswordInput = ({ handleCloseModeClick }) => {
@@ -15,7 +15,7 @@ const PasswordInput = ({ handleCloseModeClick }) => {
     resolver: zodResolver(passwordSchema),
   });
 
-  const { mutateAsync: updateUserInfo } = useUpdateUserInfoMutation();
+  const { mutate: updatePassword } = useUpdatePasswordMutation();
 
   const handleCorrespondBlur = async e => {
     try {
@@ -30,9 +30,9 @@ const PasswordInput = ({ handleCloseModeClick }) => {
     }
   };
 
-  const handleNameSubmit = async ({ newPassword, currentPassword }) => {
+  const handleNameSubmit = ({ newPassword, currentPassword }) => {
     try {
-      await updateUserInfo({ password: newPassword, currentPassword });
+      updatePassword({ password: newPassword, currentPassword });
 
       handleCloseModeClick('password');
     } catch (e) {

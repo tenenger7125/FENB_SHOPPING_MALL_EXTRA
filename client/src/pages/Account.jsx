@@ -7,10 +7,12 @@ import { Stack, Text, Title, useMantineTheme } from '@mantine/core';
 
 import { UserInfo, PasswordInput, NameInput, PhoneInput } from 'components/Account';
 import { userQuery } from 'api/query';
+import { useMediaQuery } from 'hooks';
 import { makeCipher } from 'utils';
-import { PATH } from 'constants';
+import { PATH, MEDIAQUERY_WIDTH } from 'constants';
 
 const Account = () => {
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
   const { colors, colorScheme } = useMantineTheme();
 
   const { data: userInfo } = useQuery(userQuery());
@@ -25,7 +27,7 @@ const Account = () => {
   return (
     <Stack pb="2rem" px="0.8rem" spacing="3.2rem" w="100%">
       <Title
-        fz="2.4rem"
+        fz={matches ? '2.4rem' : '2.1rem'}
         mb="3.2rem"
         pb="2rem"
         sx={{ borderBottom: `2px solid ${colorScheme === 'dark' ? colors.gray[6] : colors.gray[8]}` }}>
@@ -47,12 +49,12 @@ const Account = () => {
           내 정보
         </Title>
         {changeMode.name ? (
-          <NameInput handleCloseModeClick={handleCloseModeClick} value={userInfo.name} />
+          <NameInput handleCloseModeClick={handleCloseModeClick} />
         ) : (
           <UserInfo handleOpenModeClick={handleOpenModeClick} label="name" placeholder={name} />
         )}
         {changeMode.phone ? (
-          <PhoneInput handleCloseModeClick={handleCloseModeClick} value={userInfo.name} />
+          <PhoneInput handleCloseModeClick={handleCloseModeClick} />
         ) : (
           <UserInfo handleOpenModeClick={handleOpenModeClick} label="phone" placeholder={phone} />
         )}

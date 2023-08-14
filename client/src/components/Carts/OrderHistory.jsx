@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
 import { Stack, Title, Group, Text, useMantineTheme, Button, Center } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 
+import { checkCartQuantity } from 'api/fetch';
 import { MEDIAQUERY_WIDTH, PATH } from '../../constants';
 import { useMediaQuery } from '../../hooks';
 import { useCountCarts, useTotalPrice } from '../../hooks/carts';
@@ -9,14 +11,28 @@ import { useCountCarts, useTotalPrice } from '../../hooks/carts';
 // Link 사용? navigate() 사용?
 
 const OrderHistory = () => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
   const { colors, colorScheme } = useMantineTheme();
 
   const navigate = useNavigate();
   const countCarts = useCountCarts();
   const totalPrice = useTotalPrice();
 
-  const handleOrderButtonClick = () => navigate(PATH.ORDER);
+  const handleOrderButtonClick = async () => {
+    try {
+      await checkCartQuantity();
+
+      navigate(PATH.ORDER);
+    } catch {
+      notifications.show({
+        color: 'red',
+        autoClose: 5000,
+        title: '경고',
+        message: '재고가 부족합니다. 수량을 다시 선택해 주세요.',
+        sx: { div: { fontSize: '1.6rem' } },
+      });
+    }
+  };
 
   return (
     <Stack mb="2.4rem" mx="auto" px="0.8rem" py="0.8rem" spacing={0} w={matches ? '50%' : '100%'}>

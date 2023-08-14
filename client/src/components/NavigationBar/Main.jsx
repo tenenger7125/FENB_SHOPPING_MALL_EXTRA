@@ -29,7 +29,7 @@ import { getDecodeSearch } from 'utils';
 import { QUERY_KEY, MEDIAQUERY_WIDTH, PATH } from 'constants';
 
 const Main = () => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
 
   const navigate = useNavigate();
   const { search: rawSearch, pathname, state } = useLocation();
@@ -63,6 +63,7 @@ const Main = () => {
 };
 
 const Logo = () => {
+  const mobileMatches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.MOBILE}px)`);
   const { colorScheme } = useMantineColorScheme();
 
   return (
@@ -71,7 +72,7 @@ const Logo = () => {
         alt="486"
         pl="1rem"
         src={`images/logo/${colorScheme === 'dark' ? 'darkMain' : 'main'}.svg`}
-        width="10rem"
+        width={mobileMatches ? '10rem' : '6rem'}
       />
     </Link>
   );
@@ -151,6 +152,7 @@ const SimpleUtilArea = ({ user, handleSignOutClick, redirectTo }) => {
 };
 
 const UtilArea = ({ user, handleSignOutClick, redirectTo }) => {
+  const mobileMatches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.MOBILE}px)`);
   const theme = useMantineTheme();
 
   const navigate = useNavigate();
@@ -178,9 +180,9 @@ const UtilArea = ({ user, handleSignOutClick, redirectTo }) => {
   return (
     <Group>
       <SearchBar />
-      <Menu shadow="md" transitionProps={{ transition: 'rotate-right', duration: 150 }} width="20rem">
+      <Menu transitionProps={{ transition: 'rotate-right', duration: 150 }} width="20rem">
         <Menu.Target>
-          <Avatar radius="xl" size="5rem" sx={{ cursor: 'pointer' }} />
+          <Avatar radius="xl" size={mobileMatches ? '5rem' : '4.2rem'} sx={{ cursor: 'pointer' }} />
         </Menu.Target>
 
         <Menu.Dropdown>

@@ -9,14 +9,17 @@ import { notifications } from '@mantine/notifications';
 
 import { FormInput, FormAddressInput, FormPhoneInput } from 'components/Sign';
 import { checkEmailDuplicate, signUp } from 'api/fetch';
+import { useMediaQuery } from 'hooks';
 import { signupSchema } from 'schema';
-import { PATH } from 'constants';
+import { PATH, MEDIAQUERY_WIDTH } from 'constants';
 
 const SignUp = () => {
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
+  const mobileMatches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.MOBILE}px)`);
   const { colors, colorScheme } = useMantineTheme();
 
-  const { state } = useLocation();
   const navigate = useNavigate();
+  const { state } = useLocation();
   const { handleSubmit, register, formState, setValue } = useForm({
     resolver: zodResolver(signupSchema),
   });
@@ -63,7 +66,10 @@ const SignUp = () => {
       <Title fz="3.2rem" mb="3rem" mt="6rem" order={2}>
         회원 가입
       </Title>
-      <form noValidate onSubmit={handleSubmit(handleSignUpSubmit)}>
+      <form
+        style={{ width: matches ? '50rem' : mobileMatches ? '40rem' : '28rem' }}
+        noValidate
+        onSubmit={handleSubmit(handleSignUpSubmit)}>
         <FormInput
           error={error}
           formState={formState}
@@ -147,7 +153,7 @@ const SignUp = () => {
           mt="2rem"
           p="1.8rem 2.4rem"
           type="submit"
-          w="40rem"
+          w="100%"
           sx={{
             borderRadius: '30px',
           }}>

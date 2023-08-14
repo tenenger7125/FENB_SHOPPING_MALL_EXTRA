@@ -1,9 +1,9 @@
 import { removeCart } from 'api/fetch';
-import { useGenericMutation } from 'hooks/mutation';
+import { useOptimisticMutation } from 'hooks/mutation';
 import { QUERY_KEY } from 'constants';
 
 const useRemoveCartMutation = () =>
-  useGenericMutation({
+  useOptimisticMutation({
     queryKey: QUERY_KEY.CARTS,
     mutationFn: removeCart,
     onMutate(id) {

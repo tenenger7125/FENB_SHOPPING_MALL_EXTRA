@@ -7,7 +7,7 @@ import { useMediaQuery } from 'hooks';
 import { MEDIAQUERY_WIDTH } from 'constants';
 
 const FiltersContainer = ({ filters, handleResetFiltersClick, handleCheckFiltersClick }) => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
 
   const [opened, { open, close }] = useDisclosure(false);
 

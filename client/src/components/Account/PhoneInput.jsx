@@ -5,18 +5,18 @@ import { Group, Stack, Title } from '@mantine/core';
 
 import { ChangeButton } from 'components/Account';
 import { FormPhoneInput } from 'components/Sign';
-import { useUpdateUserInfoMutation } from 'hooks/mutation';
+import { useUpdatePhoneMutation } from 'hooks/mutation';
 import { phoneSchema } from 'schema';
 
-const PhoneInput = ({ handleCloseModeClick, value }) => {
+const PhoneInput = ({ handleCloseModeClick }) => {
   const { handleSubmit, register, formState, setValue } = useForm({
     resolver: zodResolver(phoneSchema),
   });
 
-  const { mutate: updateUserInfo } = useUpdateUserInfoMutation();
+  const { mutate: updatePhone } = useUpdatePhoneMutation();
 
   const handlePhoneSubmit = data => {
-    updateUserInfo(data);
+    updatePhone(data);
 
     handleCloseModeClick('phone');
   };
@@ -33,7 +33,6 @@ const PhoneInput = ({ handleCloseModeClick, value }) => {
           register={register}
           setValue={setValue}
           type="tel"
-          value={value}
         />
         <Group position="center" w="100%">
           <ChangeButton handleClick={handleCloseModeClick} label="phone">

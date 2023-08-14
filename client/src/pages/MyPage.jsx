@@ -8,7 +8,7 @@ import { useMediaQuery } from 'hooks';
 import { PATH, MEDIAQUERY_WIDTH } from 'constants';
 
 const MyPage = () => {
-  const match = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const match = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
   const { colorScheme } = useMantineTheme();
 
   const [opened, { open, close }] = useDisclosure(false);
@@ -36,7 +36,8 @@ const MyPage = () => {
               color="gray"
               fz="1.6rem"
               h="4rem"
-              my="1.6rem"
+              mb="3.2rem"
+              mt="1.6rem"
               radius="md"
               variant={colorScheme === 'dark' ? 'outline' : 'default'}
               w="100%"

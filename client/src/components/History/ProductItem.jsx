@@ -1,24 +1,23 @@
 import { Link } from 'react-router-dom';
 
-import { Group, Stack, Text, Image } from '@mantine/core';
+import { Stack, Text, Image, Flex } from '@mantine/core';
 
 import { useMediaQuery } from 'hooks';
 import { PATH, MEDIAQUERY_WIDTH } from 'constants';
 
 const ProductItem = ({ product: { productId, imgURL, name, color, size } }) => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const mobileMatches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.MOBILE}px)`);
 
   return (
-    <Group spacing="2.8rem" sx={{ flexWrap: 'nowrap' }}>
+    <Flex
+      direction={mobileMatches ? 'row' : 'column'}
+      mx={!mobileMatches && 'auto'}
+      spacing="2.8rem"
+      sx={{ flexWrap: 'nowrap' }}>
       <Link to={`${PATH.PRODUCTS}/${productId}`}>
-        <Image
-          height={matches ? '24rem' : '20rem'}
-          src={imgURL}
-          sx={{ minWidth: matches ? '24rem' : '20rem' }}
-          width={matches ? '24rem' : '20rem'}
-        />
+        <Image height="24rem" src={imgURL} sx={{ minWidth: '24rem' }} width="24rem" />
       </Link>
-      <Stack spacing={0}>
+      <Stack spacing={0} w={mobileMatches ? '100%' : '28rem'}>
         <Text c="green.8" fw="bold">
           주문완료
         </Text>
@@ -30,7 +29,7 @@ const ProductItem = ({ product: { productId, imgURL, name, color, size } }) => {
         <Text>색상: {color.kr}</Text>
         <Text>사이즈: {size}</Text>
       </Stack>
-    </Group>
+    </Flex>
   );
 };
 

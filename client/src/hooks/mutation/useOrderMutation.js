@@ -1,9 +1,9 @@
 import { order } from 'api/fetch';
-import { useGenericMutation } from 'hooks/mutation';
+import { useOptimisticMutation } from 'hooks/mutation';
 import { QUERY_KEY } from 'constants';
 
 const useOrderMutation = () =>
-  useGenericMutation({
+  useOptimisticMutation({
     queryKey: QUERY_KEY.CARTS,
     mutationFn: order,
     onMutate() {

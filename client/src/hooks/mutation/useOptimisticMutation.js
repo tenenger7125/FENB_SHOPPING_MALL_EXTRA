@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
-const useGenericMutation = ({ queryKey, mutationFn, onMutate }) => {
+const useOptimisticMutation = ({ queryKey, mutationFn, onMutate }) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -22,4 +22,4 @@ const useGenericMutation = ({ queryKey, mutationFn, onMutate }) => {
   });
 };
 
-export default useGenericMutation;
+export default useOptimisticMutation;

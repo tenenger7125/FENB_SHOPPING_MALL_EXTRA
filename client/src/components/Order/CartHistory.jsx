@@ -8,7 +8,7 @@ import { useTotalPrice } from 'hooks/carts';
 import { MEDIAQUERY_WIDTH } from 'constants';
 
 const History = ({ discount: { discountAmount, discountedTotalPrice } }) => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
   const { colors, colorScheme } = useMantineTheme();
 
   const totalPrice = useTotalPrice();
@@ -77,7 +77,7 @@ const History = ({ discount: { discountAmount, discountedTotalPrice } }) => {
 };
 
 const CartHistory = ({ discount }) => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
   const { colors, colorScheme } = useMantineTheme();
 
   return (

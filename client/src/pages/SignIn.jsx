@@ -3,16 +3,19 @@ import { useSetRecoilState } from 'recoil';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Image, Stack, Center, Title, useMantineTheme, Text, Button } from '@mantine/core';
+import { Image, Stack, Center, useMantineTheme, Text, Button } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 
 import { FormInput } from 'components/Sign';
 import { signIn } from 'api/fetch';
 import { userState } from 'recoil/atoms';
+import { useMediaQuery } from 'hooks';
 import { signinSchema } from 'schema';
-import { PATH } from 'constants';
+import { PATH, MEDIAQUERY_WIDTH } from 'constants';
 
 const SignIn = () => {
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
+  const mobileMatches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.MOBILE}px)`);
   const { colors, colorScheme } = useMantineTheme();
 
   const navigate = useNavigate();
@@ -50,15 +53,18 @@ const SignIn = () => {
   };
 
   return (
-    <Stack align="center" mih="46rem">
-      <Title order={2}>
+    <Stack align="center" fz="1.6rem" mih="46rem">
+      <Center>
         <Image
           alt="login logo"
           src={`images/logo/${colorScheme === 'dark' ? 'darkLogin' : 'login'}.svg`}
-          width="40rem"
+          width={matches ? '40rem' : mobileMatches ? '30rem' : '25rem'}
         />
-      </Title>
-      <form noValidate onSubmit={handleSubmit(handleSignInSubmit)}>
+      </Center>
+      <form
+        style={{ width: matches ? '50rem' : mobileMatches ? '40rem' : '28rem' }}
+        noValidate
+        onSubmit={handleSubmit(handleSignInSubmit)}>
         <FormInput
           formState={formState}
           id="email"
@@ -83,13 +89,13 @@ const SignIn = () => {
           mt="2rem"
           p="1.8rem 2.4rem"
           type="submit"
-          w="40rem"
+          w="100%"
           sx={{
             borderRadius: '30px',
           }}>
           로그인
         </Button>
-        <Center fz="1.6rem" pt="2rem">
+        <Center pt="2rem">
           회원이 아니신가요?
           <Text
             component={Link}

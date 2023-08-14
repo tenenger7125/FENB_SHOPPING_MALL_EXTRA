@@ -1,9 +1,9 @@
 import { changeCartQuantity } from 'api/fetch';
-import { useGenericMutation } from 'hooks/mutation';
+import { useOptimisticMutation } from 'hooks/mutation';
 import { QUERY_KEY } from 'constants';
 
 const useChangeCartQuantityMutation = () =>
-  useGenericMutation({
+  useOptimisticMutation({
     queryKey: QUERY_KEY.CARTS,
     mutationFn: changeCartQuantity,
     onMutate({ id: cartId, size, quantity }) {

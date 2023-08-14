@@ -1,9 +1,9 @@
 import { removeAddress } from 'api/fetch';
-import { useGenericMutation } from 'hooks/mutation';
+import { useOptimisticMutation } from 'hooks/mutation';
 import { QUERY_KEY } from 'constants';
 
 const useRemoveAddressMutation = () =>
-  useGenericMutation({
+  useOptimisticMutation({
     queryKey: QUERY_KEY.ADDRESSES,
     mutationFn: removeAddress,
     onMutate(addressId) {

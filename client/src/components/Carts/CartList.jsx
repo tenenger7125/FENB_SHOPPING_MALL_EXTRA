@@ -10,7 +10,7 @@ import { MEDIAQUERY_WIDTH } from 'constants';
 import CartItem from './CartItem';
 
 const CartList = () => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
   const { colors, colorScheme } = useMantineTheme();
 
   const totalCartItems = useTotalCartItems();

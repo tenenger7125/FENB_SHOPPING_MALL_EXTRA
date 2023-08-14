@@ -24,6 +24,10 @@ const Products = () => {
                 flexBasis: '50%',
                 maxWidth: '50%',
               },
+              '@media (max-width: 480px)': {
+                flexBasis: '100%',
+                maxWidth: '100%',
+              },
             }}>
             <Link to={`${PATH.PRODUCTS}/${id}`}>
               <Card fz="1.6rem" padding="lg" withBorder>

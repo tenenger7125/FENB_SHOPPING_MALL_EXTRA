@@ -3,33 +3,23 @@ import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import {
-  Button,
-  CloseButton,
-  Text,
-  Group,
-  Modal,
-  Stack,
-  Title,
-  useMantineTheme,
-  Center,
-  Container,
-} from '@mantine/core';
+import { Button, Modal, Stack, Title, useMantineTheme, Center, Container } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { FaHome } from 'react-icons/fa';
 
+import { AddressItem } from 'components/Order';
 import { FormAddressInput, FormInput, FormPhoneInput } from 'components/Sign';
 import { useAddresses } from 'hooks/address';
 import {
   useAddAddressMutation,
   useChangeDefaultAddressMutation,
   useRemoveAddressMutation,
-  useUpdateAddress,
+  useUpdateAddressMutation,
 } from 'hooks/mutation';
 import { addressSchema } from 'schema';
 import { MEDIAQUERY_WIDTH } from 'constants';
 
 const Address = () => {
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
   const { colors, colorScheme } = useMantineTheme();
 
   const [opened, { open, close }] = useDisclosure(false);
@@ -70,7 +60,7 @@ const Address = () => {
     <>
       <Stack pb="2rem" px="0.8rem" spacing="3.2rem" w="100%">
         <Title
-          fz="2.4rem"
+          fz={matches ? '2.4rem' : '2.1rem'}
           mb="3.2rem"
           pb="2rem"
           sx={{ borderBottom: `2px solid ${colorScheme === 'dark' ? colors.gray[6] : colors.gray[8]}` }}>
@@ -78,66 +68,14 @@ const Address = () => {
         </Title>
 
         <Stack maw="70rem" px="2rem" w="100%">
-          {addresses.map(({ _id: id, recipient, mainAddress, detailAddress, postcode, recipientPhone, isDefault }) => (
-            <Group
-              key={id}
-              align="flex-start"
-              p="1.6rem"
-              position="apart"
-              size="content-fit"
-              sx={{
-                flexWrap: 'nowrap',
-                border: `1px solid ${colors.gray[6]}`,
-                borderRadius: '5px',
-              }}>
-              <Stack spacing="0.4rem">
-                <Group align="center" justify="center" pb="0.4rem" spacing="0.4rem">
-                  <Text>{recipient}</Text>
-                  {isDefault && <FaHome />}
-                </Group>
-                <Text>{mainAddress}</Text>
-                <Text>{detailAddress}</Text>
-                <Text>{postcode}</Text>
-                <Text>{recipientPhone}</Text>
-              </Stack>
-              <Stack align="flex-end" h="13.2rem" justify="space-between">
-                <CloseButton
-                  color="dark"
-                  h="3.2rem"
-                  iconSize="1.6rem"
-                  p="0.4rem"
-                  sx={{ ':hover': { background: 'transparent', color: `${colors.blue[6]}` } }}
-                  w="3.2rem"
-                  onClick={handleRemoveAddressClick(id)}
-                />
-                <Button
-                  color="dark"
-                  h="3.2rem"
-                  py="0.8rem"
-                  variant="subtle"
-                  sx={{
-                    ':hover': { background: 'transparent', color: `${colors.blue[6]}`, textDecoration: 'underline' },
-                  }}
-                  onClick={handleUpdateClick(id)}>
-                  <Text fw="normal" fz="1.2rem">
-                    수정
-                  </Text>
-                </Button>
-                <Button
-                  color="dark"
-                  h="3.2rem"
-                  py="0.8rem"
-                  variant="subtle"
-                  sx={{
-                    ':hover': { background: 'transparent', color: `${colors.blue[6]}`, textDecoration: 'underline' },
-                  }}
-                  onClick={handleUpdateDefaultAddressClick(id)}>
-                  <Text fw="normal" fz="1.2rem">
-                    기본 배송지로 변경
-                  </Text>
-                </Button>
-              </Stack>
-            </Group>
+          {addresses.map(address => (
+            <AddressItem
+              key={address._id}
+              address={address}
+              handleRemoveAddressClick={handleRemoveAddressClick}
+              handleUpdateClick={handleUpdateClick}
+              handleUpdateDefaultAddressClick={handleUpdateDefaultAddressClick}
+            />
           ))}
           <Center>
             <Button
@@ -182,10 +120,10 @@ const Address = () => {
 // Order page의 Address component와 유사함
 const InputAddress = ({ close, addressId, resetAddressId }) => {
   const { colors } = useMantineTheme();
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
 
   const currentAddress =
-    useAddresses({ select: addresses => addresses.find(({ id }) => id === addressId.current) }) ?? {};
+    useAddresses({ select: addresses => addresses.find(({ _id }) => _id === addressId.current) }) ?? {};
 
   const { handleSubmit, register, formState, trigger, setValue, reset } = useForm({
     resolver: zodResolver(addressSchema),
@@ -199,11 +137,11 @@ const InputAddress = ({ close, addressId, resetAddressId }) => {
   });
 
   const { mutate: addAddress } = useAddAddressMutation();
-  const { mutate: updateAddress } = useUpdateAddress();
+  const { mutate: updateAddress } = useUpdateAddressMutation();
 
   const handleAddressSubmit = data => {
     if (addressId.current === null) addAddress(data);
-    else updateAddress({ id: addressId.current, newAddress: data });
+    else updateAddress({ id: addressId.current, ...data });
 
     reset();
     resetAddressId();

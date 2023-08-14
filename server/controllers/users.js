@@ -1,4 +1,5 @@
 const { User } = require('../models/shop');
+const { ObjectId } = require('mongodb');
 
 // signup api
 const createUser = async ({ email, name, phone, password, ...address }) => {
@@ -77,15 +78,35 @@ const getUserAddressOne = async (email, _id) => {
   }
 };
 
-// ❗ 이름, 비밀번호, 휴대전화번호 변경하는거 추가 필요
-const updateUserInfo = async (email, newInfo) => {
+// 비밀번호 변경
+const updatePassword = async (email, password) => {
   // OK!
   try {
-    const updatedUserInfo = await User.findOneAndUpdate({ email }, { $set: newInfo }, { new: true });
+    const updatedUserPassword = await User.findOneAndUpdate({ email }, { $set: password }, { new: true });
 
-    return updatedUserInfo;
+    return updatedUserPassword;
   } catch (err) {
-    console.error('유저 정보를 변경하는데 실패했습니다.', err);
+    console.error('패스워드를 변경하는데 실패했습니다.', err);
+  }
+};
+
+// 이름 변경
+const updateName = async (email, name) => {
+  // OK!
+  try {
+    await User.findOneAndUpdate({ email }, { $set: name }, { new: true });
+  } catch (err) {
+    console.error('유저 이름을 변경하는데 실패했습니다.', err);
+  }
+};
+
+// 전화번호 변경
+const updatePhone = async (email, phone) => {
+  // OK!
+  try {
+    await User.findOneAndUpdate({ email }, { $set: phone }, { new: true });
+  } catch (err) {
+    console.error('유저 전화번호를 변경하는데 실패했습니다.', err);
   }
 };
 
@@ -97,12 +118,12 @@ const updateUserAddress = async (email, _id, address) => {
   );
 
   try {
-    const updatedUserAddress = await User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       { email, 'address._id': _id },
       { $set: newAddress },
       { new: true, arrayFilters: [{ 'address._id': _id }] }
     );
-    return updatedUserAddress;
+    return updatedUser?.address.find(address => `${address._id}` === `${new ObjectId(_id)}`);
   } catch (err) {
     console.error('유저 주소를 변경하는데 실패했습니다.', err);
   }
@@ -205,9 +226,11 @@ module.exports = {
   getUser,
   getUserAddress,
   getUserAddressOne,
-  updateUserInfo,
-  updateUserAddress,
+  updatePassword,
+  updateName,
+  updatePhone,
   updateUserDefaultAddress,
+  updateUserAddress,
   deleteUserAddress,
   confirmUser,
   sortUserDefaultAddress,

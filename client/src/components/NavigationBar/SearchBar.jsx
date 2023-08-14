@@ -6,11 +6,14 @@ import { Autocomplete, Text } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { BiSearch } from 'react-icons/bi';
 
+import { useMediaQuery } from 'hooks';
 import { useSearchProducts } from 'hooks/products';
 import { getDecodeSearch } from 'utils';
-import { PATH } from 'constants';
+import { PATH, MEDIAQUERY_WIDTH } from 'constants';
 
 const SearchBar = () => {
+  const mobileMatches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.MOBILE}px)`);
+
   const navigate = useNavigate();
   const { search: rawSearch, pathname } = useLocation();
 
@@ -37,12 +40,12 @@ const SearchBar = () => {
     <form onSubmit={handleSubmit}>
       <Autocomplete
         data={searchProducts}
-        icon={<BiSearch size="2rem" />}
+        icon={<BiSearch size={mobileMatches ? '2rem' : '1.8rem'} />}
         itemComponent={AutoCompleteItem}
         nothingFound={<Text>검색결과가 없습니다.</Text>}
         placeholder="상품 검색"
         radius="xl"
-        size="xl"
+        size={mobileMatches ? 'xl' : 'lg'}
         value={searchInput}
         filter={(_, item) =>
           item.value.toLowerCase().includes(debounced.toLowerCase().trim()) ||

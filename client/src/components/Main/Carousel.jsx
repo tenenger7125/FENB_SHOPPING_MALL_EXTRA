@@ -10,9 +10,12 @@ import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 
 import { addCoupon } from 'api/fetch';
 import { slidesQuery, verifyQuery } from 'api/query';
-import { PATH } from 'constants';
+import { useMediaQuery } from 'hooks';
+import { PATH, MEDIAQUERY_WIDTH } from 'constants';
 
 const Carousel = ({ modalOpen, setModalTitle }) => {
+  const mobileMatches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.MOBILE}px)`);
+
   const navigate = useNavigate();
 
   const { data: slides } = useQuery(slidesQuery());
@@ -49,10 +52,10 @@ const Carousel = ({ modalOpen, setModalTitle }) => {
       <MantineCarousel
         maw="120rem"
         mx="auto"
-        nextControlIcon={<SlArrowRight color="white" size="5rem" />}
+        nextControlIcon={<SlArrowRight color="white" size={mobileMatches ? '5rem' : '2rem'} />}
         plugins={[autoplay.current]}
         pos="static"
-        previousControlIcon={<SlArrowLeft color="white" size="5rem" />}
+        previousControlIcon={<SlArrowLeft color="white" size={mobileMatches ? '5rem' : '2rem'} />}
         styles={() => ({
           control: {
             border: 'none',
@@ -71,7 +74,7 @@ const Carousel = ({ modalOpen, setModalTitle }) => {
         onSlideChange={setCarouselIdx}>
         {slides.map(({ _id: id, couponId, imgURL, alt }) => (
           <MantineCarousel.Slide key={id} sx={{ cursor: 'pointer' }} onClick={handleCarouselClick(couponId)}>
-            <Image alt={alt} fit="contain" height="45rem" src={imgURL} />
+            <Image alt={alt} fit="contain" height={mobileMatches ? '45rem' : '30rem'} src={imgURL} withPlaceholder />
           </MantineCarousel.Slide>
         ))}
       </MantineCarousel>

@@ -26,7 +26,7 @@ const Coupon = ({ handleCouponIdUpdate }) => {
   };
 
   return (
-    <Stack>
+    <Stack w="100%">
       <Title py="1.2rem">쿠폰</Title>
       <Accordion variant="separated">
         <Accordion.Item value="coupons">

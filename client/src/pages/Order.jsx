@@ -13,7 +13,7 @@ import { useOrderMutation } from 'hooks/mutation';
 import { MEDIAQUERY_WIDTH, PAYMENT_METHODS, PATH } from 'constants';
 
 const Order = () => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
   const { colorScheme } = useMantineTheme();
 
   const navigate = useNavigate();

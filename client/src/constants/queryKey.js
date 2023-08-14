@@ -6,7 +6,6 @@ const QUERY_KEY = {
   SLIDES: ['slides'],
   COUPONS: ['coupons'],
   HISTORY: ['history'],
-  ADDRESS: ['address'],
   CARTS: ['carts'],
   ADDRESSES: ['addresses'],
   USER: ['user'],

@@ -24,7 +24,7 @@ const INITIAL_FILTERS = {
 const INITIAL_SORT = 'favorite';
 
 const Category = () => {
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
 
   const { search: rawSearch } = useLocation();
   const { search, searchValue } = getDecodeSearch(rawSearch);
@@ -88,7 +88,7 @@ const Category = () => {
           handleCheckFiltersClick={handleCheckFiltersClick}
           handleResetFiltersClick={handleResetFiltersClick}
         />
-        <ResultProducts cols={matches ? 3 : 2} products={newProducts} />
+        <ResultProducts products={newProducts} />
       </Flex>
     </Container>
   );

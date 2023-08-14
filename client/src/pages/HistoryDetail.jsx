@@ -8,7 +8,7 @@ import { PAYMENT_METHODS, MEDIAQUERY_WIDTH } from 'constants';
 
 const HistoryDetail = () => {
   const { colors, colorScheme } = useMantineTheme();
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
 
   const currentHistory = useCurrentItem(historyQuery);
 
@@ -29,7 +29,7 @@ const HistoryDetail = () => {
   return (
     <Stack pb="2rem" px="0.8rem" spacing="3.2rem" w="100%">
       <Title
-        fz="2.4rem"
+        fz={matches ? '2.4rem' : '2.1rem'}
         mb="3.2rem"
         pb="2rem"
         sx={{ borderBottom: `2px solid ${colorScheme === 'dark' ? colors.gray[6] : colors.gray[8]}` }}>

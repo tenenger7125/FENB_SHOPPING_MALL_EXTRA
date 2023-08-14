@@ -7,20 +7,20 @@ import { Group, Stack, Title } from '@mantine/core';
 import { ChangeButton } from 'components/Account';
 import { FormInput } from 'components/Sign';
 import { userState } from 'recoil/atoms';
-import { useUpdateUserInfoMutation } from 'hooks/mutation';
+import { useUpdateNameMutation } from 'hooks/mutation';
 import { nameSchema } from 'schema';
 
-const NameInput = ({ handleCloseModeClick, value }) => {
+const NameInput = ({ handleCloseModeClick }) => {
   const { handleSubmit, register, formState } = useForm({
     resolver: zodResolver(nameSchema),
   });
 
-  const { mutate: updateUserInfo } = useUpdateUserInfoMutation();
+  const { mutate: updateName } = useUpdateNameMutation();
 
   const [user, setUser] = useRecoilState(userState);
 
   const handleNameSubmit = data => {
-    updateUserInfo(data);
+    updateName(data);
     setUser({ ...user, username: data.name });
 
     handleCloseModeClick('name');
@@ -38,7 +38,6 @@ const NameInput = ({ handleCloseModeClick, value }) => {
           register={register}
           size="4rem"
           type="text"
-          value={value}
         />
         <Group position="center" w="100%">
           <ChangeButton handleClick={handleCloseModeClick} label="name">

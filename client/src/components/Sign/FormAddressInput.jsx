@@ -2,9 +2,12 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 
 import { Button, useMantineTheme } from '@mantine/core';
 
+import { useMediaQuery } from 'hooks';
+import { MEDIAQUERY_WIDTH } from 'constants';
 import FormInput from './FormInput';
 
 const FormAddressInput = ({ setValue, ...rest }) => {
+  const mobileMatches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.MOBILE}px)`);
   const { colors, colorScheme } = useMantineTheme();
   const open = useDaumPostcodePopup();
 
@@ -29,7 +32,7 @@ const FormAddressInput = ({ setValue, ...rest }) => {
         <Button
           color={colorScheme === 'dark' ? 'gray.6' : 'gray'}
           h="3rem"
-          m="-0.5rem 6rem 0 0"
+          m={mobileMatches ? '-0.5rem 6rem 0 0' : '-6.5rem 6rem 0 0'}
           p="0.7rem 1.4rem"
           size="1.4rem"
           variant="outline"

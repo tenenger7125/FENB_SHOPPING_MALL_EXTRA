@@ -1,5 +1,8 @@
 import { Stack, ColorSwatch, Text, SimpleGrid, Button, useMantineColorScheme } from '@mantine/core';
 
+import { useMediaQuery } from 'hooks';
+import { MEDIAQUERY_WIDTH } from 'constants';
+
 const Info = ({
   currentProduct: { price, color, brand, stocks, feature },
   currentSelectedSize,
@@ -7,6 +10,7 @@ const Info = ({
   isSizeSelected,
   setIsSizeSelected,
 }) => {
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
   const { colorScheme } = useMantineColorScheme();
 
   const handleSizeClick = size => () => {
@@ -23,7 +27,7 @@ const Info = ({
       <Stack>
         <Text fw="600">사이즈 선택</Text>
         <SimpleGrid
-          cols={5}
+          cols={matches ? 5 : 4}
           sx={theme => ({
             border: `${!isSizeSelected && `1px solid ${theme.colors.red[6]}`}`,
             borderRadius: '0.4rem',

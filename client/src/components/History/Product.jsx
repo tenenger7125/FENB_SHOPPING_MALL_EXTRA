@@ -9,7 +9,8 @@ import { PATH, MEDIAQUERY_WIDTH } from 'constants';
 
 const Product = ({ history: { _id: id, createdAt, discountedTotalPrice, purchased } }) => {
   const { colors, colorScheme } = useMantineTheme();
-  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH}px)`);
+  const matches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.TABLET}px)`);
+  const mobileMatches = useMediaQuery(`(min-width: ${MEDIAQUERY_WIDTH.MOBILE}px)`);
 
   const navigate = useNavigate();
 
@@ -47,6 +48,7 @@ const Product = ({ history: { _id: id, createdAt, discountedTotalPrice, purchase
             color={colorScheme === 'dark' ? 'gray.2' : 'dark'}
             h="4.5rem"
             mt="1.6rem"
+            mx={!mobileMatches && 'auto'}
             radius="3rem"
             size="1.5rem"
             variant={colorScheme === 'dark' ? 'outline' : 'filled'}
