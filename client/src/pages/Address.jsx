@@ -139,7 +139,7 @@ const InputAddress = ({ close, addressId, resetAddressId }) => {
   const { mutate: updateAddress } = useUpdateAddressMutation();
 
   const handleAddressSubmit = data => {
-    if (addressId.current === null) addAddress(data);
+    if (!addressId.current) addAddress(data);
     else updateAddress({ id: addressId.current, isDefault: currentAddress.isDefault, ...data });
 
     reset();
