@@ -27,7 +27,6 @@ const Address = () => {
   const addressId = useRef();
 
   const addresses = useAddresses();
-
   const { mutate: changeDefaultAddress } = useChangeDefaultAddressMutation();
   const { mutate: removeAddress } = useRemoveAddressMutation();
 
@@ -140,8 +139,8 @@ const InputAddress = ({ close, addressId, resetAddressId }) => {
   const { mutate: updateAddress } = useUpdateAddressMutation();
 
   const handleAddressSubmit = data => {
-    if (addressId.current === null) addAddress(data);
-    else updateAddress({ id: addressId.current, ...data });
+    if (!addressId.current) addAddress(data);
+    else updateAddress({ id: addressId.current, isDefault: currentAddress.isDefault, ...data });
 
     reset();
     resetAddressId();
