@@ -6,12 +6,13 @@ const useUpdateAddressMutation = () =>
   useOptimisticMutation({
     queryKey: QUERY_KEY.ADDRESSES,
     mutationFn: updateAddress,
-    onMutate({ id, name, phone, mainAddress, detailAddress, postcode }) {
+    onMutate({ id, name, phone, mainAddress, detailAddress, postcode, isDefault }) {
       return addresses =>
         addresses.map(address =>
           address._id === id
             ? {
                 _id: id,
+                isDefault,
                 recipient: name,
                 recipientPhone: phone,
                 mainAddress,
