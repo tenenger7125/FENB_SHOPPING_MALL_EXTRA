@@ -15,7 +15,7 @@ import { QUERY_KEY } from 'constants';
 
 const defaultOptions = {
   retry: 0,
-  staleTime: 3000,
+  staleTime: 500,
 };
 
 const PAGE_SIZE = 12;
