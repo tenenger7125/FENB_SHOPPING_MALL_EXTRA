@@ -170,7 +170,7 @@ export const updatePhone = async newPhone => {
 };
 
 export const removeCart = async id => {
-  await axios.delete(`/api/carts/me/${id}`);
+  await instance.delete(`/api/carts/me/${id}`);
 };
 
 export const removeAddress = async id => {

@@ -81,6 +81,20 @@ const Logo = () => {
 const SimpleUtilArea = ({ user, handleSignOutClick, redirectTo }) => {
   const theme = useMantineTheme();
 
+  const navigate = useNavigate();
+
+  const handleMoveToHistoryClick = () => {
+    navigate(PATH.HISTORY);
+  };
+
+  const handleMoveToAddressClick = () => {
+    navigate(PATH.ADDRESS);
+  };
+
+  const handleMoveToAccountClick = () => {
+    navigate(PATH.ACCOUNT);
+  };
+
   return (
     <Stack>
       <Navbar.Section pt="xs">
@@ -128,21 +142,33 @@ const SimpleUtilArea = ({ user, handleSignOutClick, redirectTo }) => {
             </Menu.Target>
 
             <Menu.Dropdown>
-              <Link state={redirectTo} to={PATH.HISTORY}>
-                <Menu.Item fw="bold" fz="1.6rem" icon={<IoReceiptOutline size="2rem" />}>
-                  구매내역
-                </Menu.Item>
-              </Link>
-              <Link state={redirectTo} to={PATH.ADDRESS}>
-                <Menu.Item fw="bold" fz="1.6rem" icon={<BiPackage size="2rem" />}>
-                  배송지
-                </Menu.Item>
-              </Link>
-              <Link state={redirectTo} to={PATH.ACCOUNT}>
-                <Menu.Item fw="bold" fz="1.6rem" icon={<IoSettingsSharp size="2rem" />}>
-                  계정정보
-                </Menu.Item>
-              </Link>
+              <Menu.Label fw="bold" fz="1.6rem">
+                {user ? `${user.username}님 환영합니다.` : '로그인이 필요합니다.'}
+              </Menu.Label>
+              <Menu.Item
+                disabled={!user}
+                fw="bold"
+                fz="1.6rem"
+                icon={<IoReceiptOutline size="2rem" />}
+                onClick={handleMoveToHistoryClick}>
+                구매내역
+              </Menu.Item>
+              <Menu.Item
+                disabled={!user}
+                fw="bold"
+                fz="1.6rem"
+                icon={<BiPackage size="2rem" />}
+                onClick={handleMoveToAddressClick}>
+                배송지
+              </Menu.Item>
+              <Menu.Item
+                disabled={!user}
+                fw="bold"
+                fz="1.6rem"
+                icon={<IoSettingsSharp size="2rem" />}
+                onClick={handleMoveToAccountClick}>
+                계정정보
+              </Menu.Item>
             </Menu.Dropdown>
           </Menu>
         </Flex>

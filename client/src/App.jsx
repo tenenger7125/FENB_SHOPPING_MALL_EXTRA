@@ -94,6 +94,7 @@ const router = createHashRouter([
       {
         path: PATH.MYPAGE,
         element: <PrivateRoute element={<MyPage />} redirectTo={PATH.SIGNIN} />,
+        errorElement: <PrivateRoute element={<MyPage />} redirectTo={PATH.SIGNIN} />,
         children: [
           {
             path: PATH.ACCOUNT,
