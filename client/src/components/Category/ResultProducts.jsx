@@ -7,16 +7,12 @@ import { PATH } from 'constants';
 
 const ResultProducts = ({ products }) =>
   products.length ? (
-    <Grid>
+    <Grid w="100%">
       {products.map(({ _id: id, imgURL, name, price, brand, feature }) => (
         <Grid.Col
           key={id}
           span={4}
           sx={{
-            '@media (max-width: 1200px)': {
-              flexBasis: 'calc(100% / 3)',
-              maxWidth: 'calc(100% / 3)',
-            },
             '@media (max-width: 950px)': {
               flexBasis: '50%',
               maxWidth: '50%',

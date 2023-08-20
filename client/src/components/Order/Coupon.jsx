@@ -39,7 +39,7 @@ const Coupon = ({ handleCouponIdUpdate }) => {
           <Accordion.Panel>
             <Radio.Group name="coupons" onChange={handleSelectCouponChange}>
               <Stack mt="xs">
-                {coupons.map(({ _id: id, title, endTime, minimumPrice }) => (
+                {coupons.map(({ _id: id, title, expireTime, minimumPrice }) => (
                   <Radio
                     key={id}
                     disabled={totalPrice < minimumPrice}
@@ -51,7 +51,7 @@ const Coupon = ({ handleCouponIdUpdate }) => {
                         <Text color={colors.orange[7]}>
                           {totalPrice < minimumPrice
                             ? `최소 쿠폰 적용 금액은 ${minimumPrice.toLocaleString('ko-KR')}원 입니다`
-                            : `${expirationDate(endTime)}일 남았습니다`}
+                            : `${expirationDate(expireTime)}일 남았습니다`}
                         </Text>
                       </Group>
                     }

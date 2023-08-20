@@ -6,44 +6,31 @@
 </div>
 
 ## 🔗 링크
+
 **[👉 486 신발 쇼핑몰 데모](https://486-shoe.shop/)**
 
 [[486 신발 쇼핑몰 Server] GitHub](https://github.com/TEAM-FENB/FENB_SHOPPING_MALL_EXTRA_SERVER)
-
-[[486 신발 쇼핑몰 1차] GitHub](https://github.com/TEAM-FENB/FENB_SHOPPING_MALL_EXTRA_SERVER)
-
-[Notion](https://tenener.notion.site/FENB-aec4a4898b7340eaa90cada8f1f28fef)
 
 <br>
 
 ## 📅 진행 기간
 
-#### 1차 2023.04.17 ~ 2023.05.04
-#### 2차 2023.05.09 ~ 진행중
+#### 2023.05.09 ~ 2023.08.20
 
 <br>
 
 ## 👨‍💻 참여 인원
 
-#### 1차
-
-|                                    김경우                                    |                                    김경재                                    |                                    이동규                                    |                                 최수민                                 |
-| :--------------------------------------------------------------------------: | :--------------------------------------------------------------------------: | :--------------------------------------------------------------------------: | :--------------------------------------------------------------: |
-| 프론트엔드 | 프론트엔드 | 프론트엔드 | 프론트엔드 |
-|                [@KimKyungWoo94](https://github.com/KimKyungWoo94)                |                  [@GitHub-KJKim](https://github.com/GitHub-KJKim)                   |             [@tenenger7125](https://github.com/tenenger7125)              |             [@sumin9918](https://github.com/sumin9918)         |
-| <img src="https://avatars.githubusercontent.com/u/60132428?v=4" width="100"> | <img src="https://avatars.githubusercontent.com/u/106083037?v=4" width="100"> | <img src="https://avatars.githubusercontent.com/u/88726990?v=4" width="100"> | <img src="https://avatars.githubusercontent.com/u/104312167?v=4" width="100"> |
-
-#### 2차
-
-|                                    이동규                                    |                                 최수민                                 |
-| :--------------------------------------------------------------------------: | :--------------------------------------------------------------: |
-| 프론트엔드 | 프론트엔드 |
-|             [@tenenger7125](https://github.com/tenenger7125)              |             [@sumin9918](https://github.com/sumin9918)         |
+|                                    이동규                                    |                                    최수민                                     |
+| :--------------------------------------------------------------------------: | :---------------------------------------------------------------------------: |
+|                                  프론트엔드                                  |                                  프론트엔드                                   |
+|               [@tenenger7125](https://github.com/tenenger7125)               |                  [@sumin9918](https://github.com/sumin9918)                   |
 | <img src="https://avatars.githubusercontent.com/u/88726990?v=4" width="100"> | <img src="https://avatars.githubusercontent.com/u/104312167?v=4" width="100"> |
 
 <br>
 
 ## 🔧 사용 기술
+
 <div>
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
   <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black" />
@@ -83,81 +70,117 @@
 ---
 
 # 📌 주요 기능
+
 ## Navigation Bar
+
 <div>
   <img width="100%" alt="네비게이션" src="https://github.com/sumin9918/FENB_SHOPPING_MALL_EXTRA/assets/104312167/07a49fd4-fe1d-44b2-bc7c-cb4204f70322" /> 
 </div>
-  - 상품 검색
-  - 다크모드
-  - 로그아웃
-  - 메인 / 로그인 / 회원가입 / 카테고리 / 장바구니 / 관심상품 / 마이페이지 이동
-  
+
+- 상품 검색
+- 다크모드
+- 로그아웃
+- 메인 / 로그인 / 회원가입 / 카테고리 / 장바구니 / 관심상품 / 마이페이지 이동
+
 ## Main
-  - 쿠폰 발급 캐러셀
-    - 신규 유저 쿠폰(신규가입 후 30일 이내), 상시 제공 쿠폰 발급
-  - 상품 조회(무한 스크롤)
-  - Scroll To Top 버튼
+
+<div>
+  <img width="100%" alt="메인 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/61d0fd2f-3cd1-437c-979a-2cb38949d4a1" /> 
+</div>
+
+- 쿠폰 발급 캐러셀
+  - 신규 유저 쿠폰(신규가입 후 30일 이내), 상시 제공 쿠폰 발급
+- 상품 조회(무한 스크롤)
+- Scroll To Top 버튼
 
 ## Sign in
-  - form validation
 
-  - 로그인한 유저만 접근가능한 페이지 : 장바구니, 관심상품, 결제 페이지
-  - 로그인한 유저만 접근가능한 기능 : 쿠폰 발급, 장바구니 상품 추가, 관심상품 추가, 결제 진행
+<div>
+  <img width="100%" alt="로그인 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/9e56da57-9bfb-4162-a964-50ba1d11d66b" /> 
+</div>
+
+- form validation
+
+- 로그인한 유저만 접근가능한 페이지 : 장바구니, 관심상품, 결제 페이지
+- 로그인한 유저만 접근가능한 기능 : 쿠폰 발급, 장바구니 상품 추가, 관심상품 추가, 결제 진행
 
 ## Sign up
-  - form validation
-  - 이메일 중복 확인
-  - 휴대전화 입력시 자동 하이픈 추가
-  - 다음 주소 API를 활용한 실제 주소 입력 가능
+
+<div>
+  <img width="100%" alt="회원가입 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/1b6045bf-cb60-49c9-97ac-f58ccbb31d65" /> 
+</div>
+
+- form validation
+- 이메일 중복 확인
+- 휴대전화 입력시 자동 하이픈 추가
+- 다음 주소 API를 활용한 실제 주소 입력 가능
 
 ## Category
-  - 상품 필터 및 정렬
+
+<div>
+  <img width="100%" alt="카테고리 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/78f8f998-7013-4dfe-826b-13a5540a7087" /> 
+</div>
+
+- 상품 필터 및 정렬
 
 ## Product
-  - 재고를 확인하여 장바구니에 상품 추가 
-  - 관심상품 추가 및 삭제(토글 형식)
+
+<div>
+  <img width="100%" alt="상세 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/6f920ebb-eae9-492a-836f-3a667d715744" /> 
+</div>
+
+- 재고를 확인하여 장바구니에 상품 추가
+- 관심상품 추가 및 삭제(토글 형식)
 
 ## Cart
+
 <div>
   <img width="100%" alt="장바구니 페이지" src="https://github.com/sumin9918/FENB_SHOPPING_MALL_EXTRA/assets/104312167/1cdce61e-5eac-4aae-b4c5-9eb6b092e2ef" /> 
 </div>
 
-  - 장바구니 상품 수량 변경
-    - 수량이 재고 초과시 수량 증가 불가능
-  - 장바구니 상품 삭제
-  - 장바구니에 있는 상품들의 가격 표시
+- 장바구니 상품 수량 변경
+  - 수량이 재고 초과시 수량 증가 불가능
+- 장바구니 상품 삭제
+- 장바구니에 있는 상품들의 가격 표시
 
 ## Order
-  - 배송지 선택, 추가, 삭제 및 기본 배송지 변경
-  - 쿠폰 사용조건 또는 유효기간 표시 및 선택
-  - 결제수단 선택
-  - 상품들의 총 가격, 쿠폰 할인액, 최종 결제 가격 표시
 
-  #### 진행중
-  - 쿠폰이 선택되지 않는 이슈 수정 중
-  - 배송지 추가시, 추가한 배송지가 바로 선택되지 않는 이슈 수정 중
+- 배송지 선택, 추가, 삭제 및 기본 배송지 변경
+- 쿠폰 사용조건 또는 유효기간 표시 및 선택
+- 결제수단 선택
+- 상품들의 총 가격, 쿠폰 할인액, 최종 결제 가격 표시
+
+#### 진행중
+
+- 쿠폰이 선택되지 않는 이슈 수정 중
+- 배송지 추가시, 추가한 배송지가 바로 선택되지 않는 이슈 수정 중
 
 ## Order complete
-  - 결제 완료 조회 가능
 
-  #### 진행중
-  - 뒤로가기가 되는 이슈 수정 중
+- 결제 완료 조회 가능
+
+#### 진행중
+
+- 뒤로가기가 되는 이슈 수정 중
 
 ## Wish list
+
 <div>
   <img width="100%" alt="관심상품 페이지" src="https://github.com/sumin9918/FENB_SHOPPING_MALL_EXTRA/assets/104312167/05d198f8-5102-4d80-a886-27cfa72c0a9d" /> 
 </div>
 
-  - 관심 상품 제거
+- 관심 상품 제거
 
 ## History / History detail
+
 <div>
   <img width="100%" alt="구매내역 페이지" src="https://github.com/sumin9918/FENB_SHOPPING_MALL_EXTRA/assets/104312167/aa1dfe69-7a6f-442c-b12c-592572cff985" /> 
 </div>
 
 - 주문 히스토리 조회 (3, 6, 12 개월 단위로)
 
-## Adderess
+## Address
+
 <div>
   <img width="100%" alt="배송지 페이지" src="https://github.com/sumin9918/FENB_SHOPPING_MALL_EXTRA/assets/104312167/4ad9096a-5220-41f5-a996-b8c7062e0fd8" /> 
 </div>
@@ -165,6 +188,7 @@
 - 배송지 수정, 추가, 삭제 및 기본 배송지 변경
 
 ## Account
+
 <div>
   <img width="100%" alt="계정정보 페이지" src="https://github.com/sumin9918/FENB_SHOPPING_MALL_EXTRA/assets/104312167/0d6763a6-8ec1-40cb-b451-5a73b35de9d4" /> 
 </div>
@@ -174,6 +198,7 @@
   - 비밀번호를 변경하기 전 현재 비밀번호를 체크
 
 ## Withdrawal
+
 <div>
   <img width="100%" alt="회원탈퇴 페이지" src="https://github.com/sumin9918/FENB_SHOPPING_MALL_EXTRA/assets/104312167/6320993f-9e8f-462c-8561-bae0a80e1327" /> 
 </div>
@@ -181,9 +206,3 @@
 - 회원 탈퇴
 
 <br>
-
-
-
-
-
-
