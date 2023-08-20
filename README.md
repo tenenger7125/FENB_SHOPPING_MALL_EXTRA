@@ -107,7 +107,7 @@
 ## Sign up
 
 <div>
-  <img width="100%" alt="회원가입 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/ff32bd18-2b97-4ee8-ac43-184efb40d965" /> 
+  <img width="100%" alt="회원가입 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/d7b6fea9-9dcb-4e3d-b453-6b111c5eca75" /> 
 </div>
 
 - form validation
