@@ -145,23 +145,23 @@
 
 ## Order
 
+<div>
+  <img width="100%" alt="결제 주소 선택" src="https://github.com/TEAM-FENB/FENB_SHOPPING_MALL_EXTRA/assets/104312167/4a1c69ab-bcde-4a11-8961-9c4d973505f6" />
+  <img width="100%" alt="결제 페이지" src="https://github.com/TEAM-FENB/FENB_SHOPPING_MALL_EXTRA/assets/104312167/11dd6e03-59b1-41ef-9d20-55fc34868789" /> 
+</div>
+
 - 배송지 선택, 추가, 삭제 및 기본 배송지 변경
 - 쿠폰 사용조건 또는 유효기간 표시 및 선택
 - 결제수단 선택
 - 상품들의 총 가격, 쿠폰 할인액, 최종 결제 가격 표시
 
-#### 진행중
-
-- 쿠폰이 선택되지 않는 이슈 수정 중
-- 배송지 추가시, 추가한 배송지가 바로 선택되지 않는 이슈 수정 중
-
 ## Order complete
 
+<div>
+  <img width="100%" alt="결제 완료 페이지" src="https://github.com/TEAM-FENB/FENB_SHOPPING_MALL_EXTRA/assets/104312167/bf15193e-58af-4ecf-925a-5063bce2d8bf" /> 
+</div>
+
 - 결제 완료 조회 가능
-
-#### 진행중
-
-- 뒤로가기가 되는 이슈 수정 중
 
 ## Wish list
 
@@ -182,7 +182,8 @@
 ## Address
 
 <div>
-  <img width="100%" alt="배송지 페이지" src="https://github.com/sumin9918/FENB_SHOPPING_MALL_EXTRA/assets/104312167/4ad9096a-5220-41f5-a996-b8c7062e0fd8" /> 
+  <img width="100%" alt="배송지 페이지"
+ src="https://github.com/TEAM-FENB/FENB_SHOPPING_MALL_EXTRA/assets/104312167/ad7c72ad-d5d1-4e14-9575-b5f7453d3302" /> 
 </div>
 
 - 배송지 수정, 추가, 삭제 및 기본 배송지 변경
