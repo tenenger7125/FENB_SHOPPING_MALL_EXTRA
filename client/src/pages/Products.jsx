@@ -29,7 +29,7 @@ const Products = () => {
               {description}
             </Text>
           </Stack>
-          <Stack fz="1.6rem" m="4.8rem 0.8rem 0 0" miw="40rem" p="0 4.8rem 0 2.4rem" spacing={0}>
+          <Stack fz="1.6rem" m="4.8rem 0.8rem 0 0" miw="36rem" p="0 4.8rem 0 2.4rem" spacing={0} w="40rem">
             <Title>{`[${brand.kr}] ${name}`}</Title>
             <Info
               currentProduct={currentProduct}

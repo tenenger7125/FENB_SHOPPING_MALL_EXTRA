@@ -20,9 +20,14 @@ const Coupon = ({ handleCouponIdUpdate }) => {
   const selectedCoupon = useRef('쿠폰을 선택하세요');
 
   const handleSelectCouponChange = e => {
-    handleCouponIdUpdate();
+    const { _id, discountPrice, discountRate, title } = coupons.find(({ _id }) => _id === e);
 
-    selectedCoupon.current = coupons.find(({ _id }) => _id === e).title;
+    const discountAmount = discountPrice || totalPrice * (discountRate / 100);
+    const discountedTotalPrice = totalPrice - discountAmount;
+
+    handleCouponIdUpdate(_id, discountAmount, discountedTotalPrice);
+
+    selectedCoupon.current = title;
   };
 
   return (

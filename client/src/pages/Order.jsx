@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Container, Title, Group, Stack, Text, useMantineTheme, Flex, Button, Center } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 
 import { CartHistory, Address, Coupon, PaymentMethod } from 'components/Order';
 import { applyCoupon } from 'api/fetch';
@@ -40,11 +41,22 @@ const Order = () => {
 
   const handleAddModeClick = () => setMode({ ...mode, add: !mode.add, edit: !mode.edit });
 
-  const handleCouponIdUpdate = async couponId => {
-    const newDiscount = await applyCoupon(couponId);
+  const handleCouponIdUpdate = (couponId, discountAmount, discountedTotalPrice) => {
+    try {
+      applyCoupon(couponId);
 
-    setDiscount({ ...discount, ...newDiscount });
-    updateForm({ couponId });
+      setDiscount({ discountAmount, discountedTotalPrice });
+      updateForm({ couponId });
+    } catch (error) {
+      notifications.show({
+        color: 'red',
+        autoClose: 2000,
+        title: '알림',
+        message: error.message,
+        sx: { div: { fontSize: '1.6rem' } },
+        withCloseButton: false,
+      });
+    }
   };
 
   const handleOrderClick = async () => {
