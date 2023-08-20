@@ -85,7 +85,7 @@
 ## Main
 
 <div>
-  <img width="100%" alt="메인 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/61d0fd2f-3cd1-437c-979a-2cb38949d4a1" /> 
+  <img width="100%" alt="메인 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/03d659cb-c8db-40bc-9b84-ef0a07391802" /> 
 </div>
 
 - 쿠폰 발급 캐러셀
@@ -96,7 +96,7 @@
 ## Sign in
 
 <div>
-  <img width="100%" alt="로그인 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/9e56da57-9bfb-4162-a964-50ba1d11d66b" /> 
+  <img width="100%" alt="로그인 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/d1c28b8e-2466-4b0b-8926-3f3fb13b7882" /> 
 </div>
 
 - form validation
@@ -107,7 +107,7 @@
 ## Sign up
 
 <div>
-  <img width="100%" alt="회원가입 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/1b6045bf-cb60-49c9-97ac-f58ccbb31d65" /> 
+  <img width="100%" alt="회원가입 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/ff32bd18-2b97-4ee8-ac43-184efb40d965" /> 
 </div>
 
 - form validation
@@ -118,7 +118,7 @@
 ## Category
 
 <div>
-  <img width="100%" alt="카테고리 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/78f8f998-7013-4dfe-826b-13a5540a7087" /> 
+  <img width="100%" alt="카테고리 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/e86ba220-e1a4-4711-99ae-03704d383e9c" /> 
 </div>
 
 - 상품 필터 및 정렬
@@ -126,7 +126,7 @@
 ## Product
 
 <div>
-  <img width="100%" alt="상세 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/6f920ebb-eae9-492a-836f-3a667d715744" /> 
+  <img width="100%" alt="상세 페이지" src="https://github.com/tenenger7125/FENB_SHOPPING_MALL_EXTRA/assets/88726990/295048fc-ad82-4e2e-9cbc-e9adcb2d3e39" /> 
 </div>
 
 - 재고를 확인하여 장바구니에 상품 추가
